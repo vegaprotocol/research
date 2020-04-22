@@ -17,4 +17,4 @@ The issues in this repo capture our research agenda. We outline some concrete re
 
 ## Licensing
 
-Papers are currently &copy; 20XX Vega Holdings. This is under review and we aim to place them under an open source license soon (see [#4](https://github.com/vegaprotocol/research/issues/7)).
+Papers and other contents of this repo are currently &copy; 2018/2019/2020 Vega Holdings Ltd. This is under review and we aim to place them under an open source license soon (see [#4](https://github.com/vegaprotocol/research/issues/7)).
