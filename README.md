@@ -14,3 +14,7 @@ The issues in this repo capture our research agenda. We outline some concrete re
 - Gaming and attacks
 - Quantitative risk and calibration
 - Future protocol features
+
+## Licensing
+
+Papers are currently &copy; 20XX Vega Holdings. This is under review and we aim to place them under an open source license soon (see [#4](https://github.com/vegaprotocol/research/issues/7)).
