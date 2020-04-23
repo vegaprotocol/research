@@ -4,8 +4,6 @@ plugins:
 relative_links:
   enabled: true
   collections: true
-sidebars:
-  - generic
 include:
   - README.md
   - problems
