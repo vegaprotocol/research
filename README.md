@@ -28,7 +28,7 @@ Active research problems are listed below. Each one contains a link to a thread 
 - [Obfuscating or hiding order details on public order books](problems/obfuscated-order-books.md)
 - [Constrained order books for regulatory compliance](problems/constrained-order-books.md)
 - [Quantifying economic impact of decentralised financial systems](problems/economic-impact-of-decentralised-finance.md)
-- [Pricing margins as options](prolems/margins-as-options.md)
+- [Pricing margins as options](problems/margins-as-options.md)
 
 ## Licensing
 
