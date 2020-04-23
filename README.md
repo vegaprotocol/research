@@ -20,7 +20,11 @@ The issues in this repo capture our research agenda. We outline some concrete re
 Active research problems are listed below. Each one contains a link to a thread on our community forum and a GitHub issue associated with it. Community forum is open to all. If you'd like to start a formal collabroration with us please email us at [mailto](mailto:hi@vega.xyz) to request access to this repository.
 
 - [Liquidity markets](problems/liquidity-markets.md)
+- [Self governance in blockchain](problems/blockchain-self-governance.md)
+- [Beyond stake](problems/beyond-stake.md)
+- [Reward distribution between infrastructure providers and 2nd layer application providers](problems/reward-distribution.md)
+- [Financial risk management in a decentralised setting](problems/decentralised-risk-management.md)
 
 ## Licensing
 
-Papers and other contents of this repo are currently &copy; 2018/2019/2020 Vega Holdings Ltd. This is under review and we aim to place them under an open source license soon (see [#4](https://github.com/vegaprotocol/research/issues/7)).
+Papers and other contents of this repo are currently &copy; 2018/2019/2020 Vega Holdings Ltd. This is under review and we aim to place them under an open source license soon (see [#7](https://github.com/vegaprotocol/research/issues/7)).

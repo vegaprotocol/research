@@ -1,4 +1,4 @@
-# Liquidity Markets
+# Liquidity markets
 
 Community thread: TODO
 
