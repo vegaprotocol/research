@@ -1,7 +1,10 @@
 # Liquidity Markets
 
-Community thread: [TODO]
-GitHub issue: #11
+Community thread: TODO
+
+GitHub issue: [#11](https://github.com/vegaprotocol/research/issues/11)
+
+## Description
 
 We have just finsished a paper (we will add here when published) but this is the abstract, meanwhile:
 
