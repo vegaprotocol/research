@@ -24,6 +24,11 @@ Active research problems are listed below. Each one contains a link to a thread 
 - [Beyond stake](problems/beyond-stake.md)
 - [Reward distribution between infrastructure providers and 2nd layer application providers](problems/reward-distribution.md)
 - [Financial risk management in a decentralised setting](problems/decentralised-risk-management.md)
+- [Impact of transparent order books](problems/transparent-order-books.md)
+- [Obfuscating or hiding order details on public order books](problems/obfuscated-order-books.md)
+- [Constrained order books for regulatory compliance](problems/constrained-order-books.md)
+- [Quantifying economic impact of decentralised financial systems](problems/economic-impact-of-decentralised-finance.md)
+- [Pricing margins as options](prolems/margins-as-options.md)
 
 ## Licensing
 
