@@ -1,8 +1,6 @@
 # Financial risk management in a decentralised setting
 
-Community thread: TODO
-
-GitHub issue: TODO
+GitHub issue: [#14](https://github.com/vegaprotocol/research/issues/14)
 
 ## Description
 
