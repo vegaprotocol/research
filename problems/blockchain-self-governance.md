@@ -1,7 +1,5 @@
 # Flexible & self-governing architecture
 
-Community thread: TODO
-
 GitHub issue: [#1](https://github.com/vegaprotocol/research/issues/1)
 
 ## Description
@@ -18,7 +16,7 @@ the factors that cover governance - setting various operational parameters, perf
 - The reward scheme: how are validators paied in a way that keeps them motivated to do their job,
 without increasing the transaction cost or motivating validators to be too big or too small ?
 How can we avoid validators to do a good job and not try to get away getting paid for the minimum
-work possible? (see also: [#12](problems/beyond-proof-of-stake.md)
+work possible? (see also: [#12](beyond-proof-of-stake.md))
 - Validator Membership: How can we keep a validator set of validators that have sufficient performance,
 are well distributed, and can't end up having a monopoly that can dictate prices ?
 - Code updates: When and how is the implementation changed in a way that there is no single entity

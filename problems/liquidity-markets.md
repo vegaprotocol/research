@@ -1,7 +1,5 @@
 # Liquidity markets
 
-Community thread: TODO
-
 GitHub issue: [#11](https://github.com/vegaprotocol/research/issues/11)
 
 ## Description

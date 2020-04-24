@@ -1,7 +1,5 @@
 # Impact of transparent order books
 
-Community thread: TODO
-
 GitHub issue: [#3](https://github.com/vegaprotocol/research/issues/3)
 
 ## Description
