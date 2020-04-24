@@ -20,7 +20,7 @@ The issues in this repo capture our research agenda. We outline some concrete re
 Active research problems are listed below. Each one contains a link to a thread on our community forum and a GitHub issue associated with it. Community forum is open to all. If you'd like to start a formal collabroration with us please email us at [mailto](mailto:hi@vega.xyz) to request access to this repository.
 
 - [Liquidity markets](problems/liquidity-markets.md) ![economics] ![game-theory] ![mechanism-design]
-- [Self governance in blockchain](problems/blockchain-self-governance.md) ![cryptography] ![game-theory] ![mechanism-design]
+- [Self governance in blockchain](problems/blockchain-self-governance.md) [![cryptography](https://img.shields.io/badge/-cryptography-%2382dd5a.svg?maxAge=25000)](https://github.com/vegaprotocol/research/issues?q=is%3Aissue+is%3Aopen+label%3Acryptography) ![game-theory] ![mechanism-design]
 - [Beyond stake](problems/beyond-stake.md) ![cryptography] ![mechanism-design]
 - [Reward distribution between infrastructure providers and 2nd layer application providers](problems/reward-distribution.md) ![markets] ![mechanism-design]
 - [Financial risk management in a decentralised setting](problems/decentralised-risk-management.md) ![quantitative-finance] ![mechanism-design]
