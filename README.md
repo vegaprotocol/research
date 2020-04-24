@@ -1,6 +1,6 @@
 # Vega Research
 
-Vega is a bespoke blockchain designed for decentralised trading. It operates as a public sidechain to major collateral chains and is designed for high speed trading of derivatives. Please refer to our whitepaper for more background details: [https://vega.xyz/background#published-papers](https://vega.xyz/background#published-papers).
+Vega is a bespoke blockchain designed for decentralised trading. It operates as a public sidechain to major collateral chains and is designed for high speed trading of derivatives. For more background details please see the papers that we have published to date: [https://vega.xyz/background#published-papers](https://vega.xyz/background#published-papers).
 
 As it's a first attempt (that we know of) at creating a professional grade system with such characteristics it faces research problems that are often specific to that setting and interdisciplinary in nature. The main disciplines that our research spans include Computer Science, Mathematics and Economics.
 
@@ -11,13 +11,13 @@ The issues in this repo capture our research agenda. We outline some concrete re
 ## Current key areas
 
 - Blockchains designed for trading
-- Gaming and attacks
+- System gameability and attacks
 - Quantitative risk and calibration
 - Future protocol features
 
 ## Research problems
 
-Active research problems are listed below. Each one contains a link to a thread on our community forum and a GitHub issue associated with it. [Community forum](https://community.vega.xyz/) is open to all. If you'd like to start a formal collabroration with us please email us at [hi@vega.xyz](mailto:hi@vega.xyz) to request access to this repository.
+Active research problems are listed below. Each one contains a link to the GitHub issue associated with it and the relevant labels used throughout our repository. If you'd like to start a formal collabroration with us please email us at [hi@vega.xyz](mailto:hi@vega.xyz) to request access to this repository.
 
 - [Beyond stake](problems/beyond-proof-of-stake.md) [![cryptography](https://img.shields.io/badge/-cryptography-%2382dd5a.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/cryptography) [![mechanism-design](https://img.shields.io/badge/-mechanism--design-%23e0d61f.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/mechanism-design)
 
