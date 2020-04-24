@@ -1,8 +1,6 @@
 # Profit attribution on blockchain
 
-Community thread: TODO
-
-GitHub issue: TODO
+GitHub issue: [#13](https://github.com/vegaprotocol/research/issues/13)
 
 ## Description
 

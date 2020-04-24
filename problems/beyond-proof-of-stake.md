@@ -1,8 +1,6 @@
 # Beyond proof of stake
 
-Community thread: TODO
-
-GitHub issue: TODO
+GitHub issue: [#12](https://github.com/vegaprotocol/research/issues/12)
 
 ## Description
 
