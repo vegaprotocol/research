@@ -1,6 +1,6 @@
 # Quantifying economic impact of decentralised financial systems
 
-GitHub issue: [#6](https://github.com/vegaprotocol/research/issues/6)
+GitHub issue: [#5](https://github.com/vegaprotocol/research/issues/5)
 
 ## Description
 
