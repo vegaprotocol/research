@@ -1,4 +1,4 @@
-# Reward distribution between infrastructure providers and 2nd layer application providers
+# Profit attribution on blockchain
 
 Community thread: TODO
 

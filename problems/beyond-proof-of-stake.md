@@ -1,4 +1,4 @@
-# Beyond Stake
+# Beyond proof of stake
 
 Community thread: TODO
 
