@@ -6,13 +6,13 @@ GitHub issue: TODO
 
 ## Description
 
-When dealing with financial products it is import to accurately estimate risks involved. This requirement is even more pressing in the case of derivatives. While there are many potential sources of risk, some of which are quite esoteric and difficult to quantify, market risk is often the one that is considered the most. 
+When dealing with financial products it is import to accurately estimate risks involved. This requirement is even more pressing in the case of derivatives. While there are many potential sources of risk, some of which are quite esoteric and difficult to quantify, market risk is often the one that is considered the most.
 
-For the purposes of this problem we can define market risk as distribution of prices for a given market at a fixed point in the future. Any form of risk management requires taking a view on what that future price distribution may be. 
+For the purposes of this problem we can define market risk as distribution of prices for a given market at a fixed point in the future. Any form of risk management requires taking a view on what that future price distribution may be.
 
-In a centralised setting it would be chosen by single entity according to well defined set of rules and regulations. In a decentralised setting anyone should be able to put forward their view on it. 
+In a centralised setting it would be chosen by single entity according to well defined set of rules and regulations. In a decentralised setting anyone should be able to put forward their view on it.
 
-As this process is non-trivial and has high potential consequences for the market an adequate incentive scheme must be put in place to encourage views that are most likely to be accurate (and are not deliberately manipulated to extract gains from the market by acting as a market-participant). Downplaying potential downside and exaggerating upside of future market moves might encourage excessive risk-taking and in turn a series of defaults possibly followed by a market crash. An overly conservative prognosis might reduce market activity which is an undesirable outcome from the point of view of the exchange. 
+As this process is non-trivial and has high potential consequences for the market an adequate incentive scheme must be put in place to encourage views that are most likely to be accurate (and are not deliberately manipulated to extract gains from the market by acting as a market-participant). Downplaying potential downside and exaggerating upside of future market moves might encourage excessive risk-taking and in turn a series of defaults possibly followed by a market crash. An overly conservative prognosis might reduce market activity which is an undesirable outcome from the point of view of the exchange.
 
 Research problems:
 
