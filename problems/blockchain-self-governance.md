@@ -1,5 +1,7 @@
 # Flexible & self-governing architecture
 
+[![cryptography](https://img.shields.io/badge/-cryptography-%2382dd5a.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/cryptography) [![game-theory](https://img.shields.io/badge/-game--theory-%238af7ec.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/game-theory) [![mechanism-design](https://img.shields.io/badge/-mechanism--design-%23e0d61f.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/mechanism-design)
+
 GitHub issue: [#1](https://github.com/vegaprotocol/research/issues/1)
 
 ## Description

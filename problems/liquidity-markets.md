@@ -1,5 +1,7 @@
 # Liquidity markets
 
+[![economics](https://img.shields.io/badge/-economics-%23f461ba.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/economics) [![game-theory](https://img.shields.io/badge/-game--theory-%238af7ec.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/game-theory) [![mechanism-design](https://img.shields.io/badge/-mechanism--design-%23e0d61f.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/mechanism-design)
+
 GitHub issue: [#11](https://github.com/vegaprotocol/research/issues/11)
 
 ## Description

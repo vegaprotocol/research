@@ -1,5 +1,6 @@
 # Impact of transparent order books
 
+[![game-theory](https://img.shields.io/badge/-game--theory-%238af7ec.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/game-theory) [![market-microstructure](https://img.shields.io/badge/-market--microstructure-%237d63d3.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/market-microstructure)
 GitHub issue: [#3](https://github.com/vegaprotocol/research/issues/3)
 
 ## Description

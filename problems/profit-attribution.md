@@ -1,5 +1,7 @@
 # Profit attribution on blockchain
 
+[![markets](https://img.shields.io/badge/-markets-%23f9efa9.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/markets) [![mechanism-design](https://img.shields.io/badge/-mechanism--design-%23e0d61f.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/mechanism-design)
+
 GitHub issue: [#13](https://github.com/vegaprotocol/research/issues/13)
 
 ## Description
