@@ -1,5 +1,7 @@
 # Obfuscating or hiding order details on public order books
 
+[![cryptography](https://img.shields.io/badge/-cryptography-%2382dd5a.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/cryptography) [![market-microstructure](https://img.shields.io/badge/-market--microstructure-%237d63d3.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/market-microstructure)
+
 GitHub issue: [#4](https://github.com/vegaprotocol/research/issues/4)
 
 ## Description

@@ -1,5 +1,7 @@
 # Quantifying economic impact of decentralised financial systems
 
+[![economics](https://img.shields.io/badge/-economics-%23f461ba.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/economics) [![markets](https://img.shields.io/badge/-markets-%23f9efa9.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/markets)
+
 GitHub issue: [#5](https://github.com/vegaprotocol/research/issues/5)
 
 ## Description

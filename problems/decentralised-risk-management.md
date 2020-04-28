@@ -1,5 +1,7 @@
 # Financial risk management in a decentralised setting
 
+[![quantitative-finance](https://img.shields.io/badge/-quantitative--finance-%23c6e861.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/quantitative-finance) [![mechanism-design](https://img.shields.io/badge/-mechanism--design-%23e0d61f.svg?maxAge=25000)](https://github.com/vegaprotocol/research/labels/mechanism-design)
+
 GitHub issue: [#14](https://github.com/vegaprotocol/research/issues/14)
 
 ## Description
