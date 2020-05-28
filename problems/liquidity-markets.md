@@ -6,7 +6,7 @@ GitHub issue: [#11](https://github.com/vegaprotocol/research/issues/11)
 
 ## Description
 
-We have just finsished a paper (we will add here when published) but this is the abstract, meanwhile:
+We have just finished a paper (we will add a link here when published), but meanwhile this is the abstract:
 
 > Exchanges and other trading venues must be able to reliably offer sufficient liquidity to meet traders' demand, and, in turn, benefit from higher revenue and faster growth when markets are liquid. Traders enjoy lower volatility, tighter spreads, and more efficient pricing in liquid markets. A key problem for exchanges is how to attract liquidity providers and retain their support in all market conditions. This is commonly approached through individual business agreements with market makers whereby a bespoke contract is negotiated for specific obligations and rewards. Such approaches require a central intermediary that profits from liquidity provision to administer, and typically fail to align the incentives of exchanges and liquidity providers as markets grow. This is costly, slow, and scalability is limited by the exchange’s resources, contacts, and expertise.
 >
