@@ -23,7 +23,7 @@ work possible? (see also: [#12](beyond-proof-of-stake.md))
 are well distributed, and can't end up having a monopoly that can dictate prices ?
 - Code updates: When and how is the implementation changed in a way that there is no single entity
 dictating the code and while avoiding hard forks ?
-- Runntime parameters, such as timeouts
+- Runtime parameters, such as timeouts
 
 ## Features
 
