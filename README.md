@@ -42,4 +42,4 @@ Active research problems are listed below. Each one contains a link to the GitHu
 
 ## Licensing
 
-Papers and other contents of this repo are currently &copy; 2018/2019/2020 Vega Holdings Ltd. This is under review and we aim to place them under an open source license soon (see [#7](https://github.com/vegaprotocol/research/issues/7)).
+Please see [LICENSE.md](./LICENSE.md).
