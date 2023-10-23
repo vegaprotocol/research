@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "perps-overview"
+version = "0.1.0"
+description = ""
+authors = ["Witold <witold@vega.xyz>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+numpy = "^1.26.0"
+pandas = "^2.1.1"
+scipy = "^1.11.3"
+matplotlib = "^3.8.0"
+ipywidgets = "^8.1.1"
+black = {extras = ["jupyter"], version = "^23.9.1"}
+python-dateutil = "^2.8.2"
+ipykernel = "^6.25.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+pytest = "^7.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
