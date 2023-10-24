@@ -3,13 +3,10 @@ import datetime as dt
 import modules.perps as perps
 import matplotlib.dates as mdates
 from matplotlib.patches import Patch
-import matplotlib.pyplot as plt
-
 
 def plot_curve(curve, ax, start_date, end_date, add_labels):
     xs = np.arange(start_date.timestamp(), end_date.timestamp(), 120)
     ax.plot(xs, curve(xs), label="simple curve")
-    ax.legend(loc="upper center")
 
     format_axis(ax)
 
@@ -46,7 +43,6 @@ def plot_curve_difference(
         label = "perp - spot"
     ax.plot(xs, ys, "-", label=label)
     format_x_axis_timestamp_to_date(ax)
-    ax.legend(loc="upper center")
 
 
 def format_axis(ax):
@@ -137,13 +133,14 @@ def plot_funding_periods(
             where="post",
             color="green",
             label="spot: TWAP",
+            linewidth="3",
         )
 
     if show_perp_points:
         ax.plot(
             perp_sampling_schedule,
             perp_points,
-            "+",
+            "*",
             color="purple",
             label="perp: sampled points",
         )

@@ -4,6 +4,7 @@ import modules.curves as curves
 import modules.perps as perps
 import modules.plots as plots
 import ipywidgets as widgets
+import modules.figures as figs
 import glob
 
 
@@ -37,66 +38,28 @@ class UI:
         show_perp_points=False,
         zoom=None,
     ):
-        _, ax = plt.subplots(1, 1, figsize=(15, 5))
-
-        funding_schedule = perps.create_schedule(
-            start_date,
-            end_date,
-            dt.timedelta(minutes=funding_schedule_minutes),
-            False,
-            ax,
-        )
-        spot_sampling_schedule = perps.create_schedule(
-            start_date, end_date, dt.timedelta(minutes=spot_sampling_minutes)
-        )
-        perp_sampling_schedule = perps.create_schedule(
-            start_date, end_date, dt.timedelta(minutes=perp_sampling_minutes)
-        )
-
-        funding_periods = perps.compute_funding_periods(
-            funding_schedule,
-            spot_sampling_schedule,
-            perp_sampling_schedule,
-            self.spot_curve,
-            self.perp_curve,
-            interest_rate,
-            clamp_lower_bound,
-            clamp_upper_bound,
-        )
-
-        x_limit_left = None
-        x_limit_right = None
-        if zoom != None and (zoom[0] != 0 or zoom[1] != 1):
-            if zoom[0] == zoom[1]:
-                if zoom[0] > 0.01:
-                    zoom = (zoom[1] - 0.01, zoom[1])
-                else:
-                    zoom = (zoom[0], zoom[0] + 0.01)
-
-            s = start_date.timestamp()
-            e = end_date.timestamp()
-            start = s + zoom[0] * (e - s)
-            end = s + zoom[1] * (e - s)
-            x_limit_left = dt.datetime.fromtimestamp(start)
-            x_limit_right = dt.datetime.fromtimestamp(end)
-
-        plots.plot_funding_periods(
-            ax,
-            funding_periods,
-            spot_sampling_schedule,
-            perp_sampling_schedule,
-            self.spot_curve,
-            self.perp_curve,
-            x_limit_left=x_limit_left,
-            x_limit_right=x_limit_right,
-            show_spot_points=show_spot_points,
-            show_perp_points=show_perp_points,
-            show_spot_step=show_spot_step,
-            show_perp_step=show_perp_step,
-            show_spot_twap=show_spot_twap,
-            show_perp_twap=show_perp_twap,
+        figs.funding_periods(
+            start_date=start_date,
+            end_date=end_date,
+            spot_curve=self.spot_curve,
+            perp_curve=self.perp_curve,
+            funding_schedule_minutes=funding_schedule_minutes,
+            spot_sampling_minutes=spot_sampling_minutes,
+            perp_sampling_minutes=perp_sampling_minutes,
+            interest_rate=interest_rate,
+            clamp_lower_bound=clamp_lower_bound,
+            clamp_upper_bound=clamp_upper_bound,
             show_funding_payment=show_funding_payment,
             show_funding_rate=show_funding_rate,
+            show_spot_twap=show_spot_twap,
+            show_perp_twap=show_perp_twap,
+            show_spot_step=show_spot_step,
+            show_perp_step=show_perp_step,
+            show_spot_points=show_spot_points,
+            show_perp_points=show_perp_points,
+            zoom=zoom,
+            show=True,
+            plot_save_path=None,
         )
 
     def display_curves(
@@ -120,83 +83,27 @@ class UI:
         perp_curve_2_starting_value: float,
         perp_curve_2_relative_change: float,
     ):
-        _, ax = plt.subplots(1, 3, figsize=(15, 5))
-        ax[0].set_title("spot price")
-        ax[1].set_title("perp price")
-        ax[2].set_title("price difference")
-
-        spot_curve_1 = None
-        spot_curve_2 = None
-        perp_curve_1 = None
-        perp_curve_2 = None
-        spot_resulting_curve = None
-        perp_resulting_curve = None
-
-        if use_spot_curve_1:
-            spot_curve_1 = curves.create_curve_from_file(
-                spot_curve_1_path,
-                scaling=spot_curve_1_scaling,
-                horizontal_shift=spot_curve_1_horizontal_shift,
-                vertical_shift=spot_curve_1_vertical_shift,
-            )
-
-        if use_perp_curve_1:
-            perp_curve_1 = curves.create_curve_from_file(
-                perp_curve_1_path,
-                scaling=perp_curve_1_scaling,
-                horizontal_shift=perp_curve_1_horizontal_shift,
-                vertical_shift=perp_curve_1_vertical_shift,
-            )
-
-        if use_spot_curve_2:
-            spot_curve_2 = curves.create_simple_curve(
-                start_date,
-                end_date,
-                spot_curve_2_starting_value,
-                spot_curve_2_relative_change,
-            )
-
-        if use_perp_curve_2:
-            perp_curve_2 = curves.create_simple_curve(
-                start_date,
-                end_date,
-                perp_curve_2_starting_value,
-                perp_curve_2_relative_change,
-            )
-
-        if spot_curve_1 != None or spot_curve_2 != None:
-            spot_resulting_curve = curves.create_superimposed_curve(
-                spot_curve_1,
-                spot_curve_2,
-                ax=ax[0],
-                start_date=start_date,
-                end_date=end_date,
-                add_labels=False,
-            )
-        else:
-            spot_resulting_curve = curves.create_simple_curve(
-                start_date, end_date, 0, 0, ax=ax[0]
-            )
-
-        if perp_curve_1 != None or perp_curve_2 != None:
-            perp_resulting_curve = curves.create_superimposed_curve(
-                perp_curve_1,
-                perp_curve_2,
-                ax=ax[1],
-                start_date=start_date,
-                end_date=end_date,
-                add_labels=False,
-            )
-        else:
-            perp_resulting_curve = curves.create_simple_curve(
-                start_date, end_date, 0, 0, ax=ax[1]
-            )
-
-        self.spot_curve = spot_resulting_curve
-        self.perp_curve = perp_resulting_curve
-
-        return plots.plot_curve_difference(
-            ax[2], perp_resulting_curve, spot_resulting_curve, start_date, end_date
+        self.spot_curve, self.perp_curve = figs.spot_perp_difference(
+            start_date=start_date,
+            end_date=end_date,
+            use_spot_curve_1=use_spot_curve_1,
+            use_spot_curve_2=use_spot_curve_2,
+            spot_curve_1_path=spot_curve_1_path,
+            spot_curve_1_scaling=spot_curve_1_scaling,
+            spot_curve_1_horizontal_shift=spot_curve_1_horizontal_shift,
+            spot_curve_1_vertical_shift=spot_curve_1_vertical_shift,
+            spot_curve_2_starting_value=spot_curve_2_starting_value,
+            spot_curve_2_relative_change=spot_curve_2_relative_change,
+            use_perp_curve_1=use_perp_curve_1,
+            use_perp_curve_2=use_perp_curve_2,
+            perp_curve_1_path=perp_curve_1_path,
+            perp_curve_1_scaling=perp_curve_1_scaling,
+            perp_curve_1_horizontal_shift=perp_curve_1_horizontal_shift,
+            perp_curve_1_vertical_shift=perp_curve_1_vertical_shift,
+            perp_curve_2_starting_value=perp_curve_2_starting_value,
+            perp_curve_2_relative_change=perp_curve_2_relative_change,
+            show=True,
+            plot_save_path=None,
         )
 
     def get_spot_curve(self):
