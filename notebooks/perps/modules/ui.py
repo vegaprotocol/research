@@ -1,8 +1,5 @@
-import matplotlib.pyplot as plt
 import datetime as dt
 import modules.curves as curves
-import modules.perps as perps
-import modules.plots as plots
 import ipywidgets as widgets
 import modules.figures as figs
 import glob
@@ -20,22 +17,22 @@ class UI:
 
     def display_funding_periods(
         self,
-        start_date,
-        end_date,
-        funding_schedule_minutes,
-        spot_sampling_minutes,
-        perp_sampling_minutes,
-        interest_rate=0,
-        clamp_lower_bound=0,
-        clamp_upper_bound=0,
-        show_funding_payment=False,
-        show_funding_rate=False,
-        show_spot_twap=False,
-        show_perp_twap=False,
-        show_spot_step=False,
-        show_perp_step=False,
-        show_spot_points=False,
-        show_perp_points=False,
+        start_date: dt.datetime,
+        end_date: dt.datetime,
+        funding_payment_frequency: dt.time,
+        spot_sampling_frequency: dt.time,
+        perp_sampling_frequency: dt.time,
+        interest_rate: float = 0,
+        clamp_lower_bound: float = 0,
+        clamp_upper_bound: float = 0,
+        show_funding_payment: bool = False,
+        show_funding_rate: bool = False,
+        show_spot_twap: bool = False,
+        show_perp_twap: bool = False,
+        show_spot_step: bool = False,
+        show_perp_step: bool = False,
+        show_spot_points: bool = False,
+        show_perp_points: bool = False,
         zoom=None,
     ):
         figs.funding_periods(
@@ -43,9 +40,9 @@ class UI:
             end_date=end_date,
             spot_curve=self.spot_curve,
             perp_curve=self.perp_curve,
-            funding_schedule_minutes=funding_schedule_minutes,
-            spot_sampling_minutes=spot_sampling_minutes,
-            perp_sampling_minutes=perp_sampling_minutes,
+            funding_payment_frequency = dt.datetime.combine(dt.date.min, funding_payment_frequency) - dt.datetime.min,
+            spot_sampling_frequency = dt.datetime.combine(dt.date.min, spot_sampling_frequency) - dt.datetime.min,
+            perp_sampling_frequency = dt.datetime.combine(dt.date.min, perp_sampling_frequency) - dt.datetime.min,
             interest_rate=interest_rate,
             clamp_lower_bound=clamp_lower_bound,
             clamp_upper_bound=clamp_upper_bound,
@@ -292,38 +289,26 @@ class UI:
             value=False, description="show perp points", indent=False
         )
 
-        slider_layout = widgets.Layout(width="600px", height="40px")
-
-        slider1 = widgets.IntSlider(
-            value=1500,
-            min=1,
-            max=44e3,
+        dp1 = widgets.TimePicker(
+            value=dt.time(hour=8,minute=0,second=0),
             step=1,
-            description="funding payment frequency (minutes)",
-            style={"description_width": "250px"},
-            layout=slider_layout,
-        )
-        slider2 = widgets.IntSlider(
-            value=1500,
-            min=1,
-            max=44e3,
+            description="funding payment frequency",
+            style={"description_width": "250px", "width": 400})
+        
+        dp2 = widgets.TimePicker(
+            value=dt.time(hour=0,minute=5,second=0),
             step=1,
-            description="spot sampling frequency (minutes)",
-            style={"description_width": "250px"},
-            layout=slider_layout,
-        )
-        slider3 = widgets.IntSlider(
-            value=1500,
-            min=1,
-            max=44e3,
+            description="spot sampling frequency",
+            style={"description_width": "250px"})
+        
+        dp3 = widgets.TimePicker(
+            value=dt.time(hour=8,minute=0,second=30),
             step=1,
-            description="perp smapling frequency (minutes)",
-            style={"description_width": "250px"},
-            layout=slider_layout,
-        )
+            description="perp sampling frequency",
+            style={"description_width": "250px"})
 
         frequency_sliders = widgets.HBox(
-            [slider1, slider2, slider3], layout=widgets.Layout(width="90%")
+            [dp1, dp2, dp3], layout=widgets.Layout(width="90%")
         )
         checkboxes = widgets.HBox(
             [cb1, cb2, cb3, cb4, cb5, cb6, cb7, cb8], layout=widgets.Layout(width="93%")
@@ -366,9 +351,9 @@ class UI:
             {
                 "start_date": widgets.fixed(self.start_date),
                 "end_date": widgets.fixed(self.end_date),
-                "funding_schedule_minutes": slider1,
-                "spot_sampling_minutes": slider2,
-                "perp_sampling_minutes": slider3,
+                "funding_payment_frequency": dp1,
+                "spot_sampling_frequency": dp2,
+                "perp_sampling_frequency": dp3,
                 "interest_rate": box_interest_rate,
                 "clamp_lower_bound": box_lower_bound,
                 "clamp_upper_bound": box_upper_bound,

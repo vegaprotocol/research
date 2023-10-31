@@ -105,12 +105,12 @@ def compute_funding_payment(
     return funding_payment
 
 
-def summarise(funding_periods, spot_curve, perp_curve):
+def summarise(start, end, funding_periods, spot_curve, perp_curve):
     if len(funding_periods) == 0:
         return None
 
-    start = funding_periods[0].start
-    end = funding_periods[-1].end
+    # start = funding_periods[0].start
+    # end = funding_periods[-1].end
 
     spot_rate_of_return = spot_curve(end) / spot_curve(start) - 1
 

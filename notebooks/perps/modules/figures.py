@@ -118,7 +118,7 @@ def spot_perp_difference(
         ax[2], perp_resulting_curve, spot_resulting_curve, start_date, end_date
     )
     if not plot_save_path is None:
-        plt.savefig(plot_save_path)
+        plt.savefig(plot_save_path, bbox_inches="tight")
 
     if show:
         plt.show()
@@ -130,9 +130,9 @@ def funding_periods(
     end_date: dt.datetime,
     spot_curve: Any,
     perp_curve: Any,
-    funding_schedule_minutes: int,
-    spot_sampling_minutes: int,
-    perp_sampling_minutes: int,
+    funding_payment_frequency: dt.timedelta,
+    spot_sampling_frequency: dt.timedelta,
+    perp_sampling_frequency: dt.timedelta,
     interest_rate: float = 0,
     clamp_lower_bound: float = 0,
     clamp_upper_bound: float = 0,
@@ -148,26 +148,30 @@ def funding_periods(
     show: bool = False,
     plot_save_path: Optional[str] = None,
 ):
-    if not show:
+    save = not plot_save_path is None
+    ax = None
+    
+    if show:
+        plt.ion()
+    else:
         plt.ioff()
         plt.clf()
-    else:
-        plt.ion()
 
-    _, ax = plt.subplots(1, 1, figsize=(15, 5))
+    if save or show:
+         _, ax = plt.subplots(1, 1, figsize=(15, 5))
 
     funding_schedule = perps.create_schedule(
         start_date,
         end_date,
-        dt.timedelta(minutes=funding_schedule_minutes),
+        funding_payment_frequency,
         False,
         ax,
     )
     spot_sampling_schedule = perps.create_schedule(
-        start_date, end_date, dt.timedelta(minutes=spot_sampling_minutes)
+        start_date, end_date, spot_sampling_frequency
     )
     perp_sampling_schedule = perps.create_schedule(
-        start_date, end_date, dt.timedelta(minutes=perp_sampling_minutes)
+        start_date, end_date, perp_sampling_frequency
     )
 
     funding_periods = perps.compute_funding_periods(
@@ -199,6 +203,8 @@ def funding_periods(
 
     plots.plot_funding_periods(
         ax,
+        start_date,
+        end_date,
         funding_periods,
         spot_sampling_schedule,
         perp_sampling_schedule,
@@ -216,5 +222,5 @@ def funding_periods(
         show_funding_rate=show_funding_rate,
     )
 
-    if not plot_save_path is None:
-        plt.savefig(plot_save_path)
+    if save:
+        plt.savefig(plot_save_path, bbox_inches="tight")
