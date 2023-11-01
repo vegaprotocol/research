@@ -24,6 +24,7 @@
 \usepackage{fancyhdr}
 \usepackage{caption}
 \usepackage{textcomp}
+\usepackage{booktabs}
 % \usepackage{parskip}  % uncomment to remove paragraph indents
 %\usepackage{refcheck}
 
@@ -288,8 +289,38 @@ However, we choose not to employ this mechanism in our implementation of the fun
 
 Certain venues modify the time-weighted average price used for funding rate calculation to assign different importance to observations depending on their relative time from the funding payment, however we choose not to employ such a mechanism in our implementation of the funding rate calculation.
 
+\subsection{Funding payment and spot sampling frequency}
+
+In this section we will briefly consider the impact of funding frequency and spot sampling frequency on the funding payments observed in a market.
+
+We will use the two curves displayed below alongs with 7 day funding frequency, spot curve sampled every 1 hour and perp curve sampled every 5 minutes as our baseline setup.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{./plots/example_curves.png}
+    \caption{Example BTC/USD spot and perpetual features prices for May 2023.}
+    \label{fig:example_curves}
+\end{figure}
+
+The resulting funding payments and rate of return for the perpetual contracts of size 1 held throughout such market are displayed in figure ~\ref{fig:resulting_funding_periods}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{./plots/7d-payment-frequency_8h-spot-sampling-300s_perp-sampling.png}
+    \caption{Resulting funding payments for the baseline case. Interactive version can be found at: \href{https:/github.com/vegaprotocol/research}{https:/github.com/vegaprotocol/research}.}
+    \label{fig:resulting_funding_periods}
+\end{figure}
+
+The impact of varying the funding payment frequency is summarised in table ~\ref{tbl:funding_frequency}.
+
+\input{./plots/table_vary_funding_frequency.tex}
+
+The impact of varying the spot sampling frequency is summarised in table ~\ref{tbl:spot_sampling}.
+
+\input{./plots/table_vary_spot_sampling_frequency.tex}
+
 \appendix
-\section{Proof of Proposition~\ref{prop price tracking}}
+\section{Proof of Proposition ~\ref{prop price tracking}}
 Let us start by noting that our assumptions that $\mathbb E\int_0^\infty e^{-ru} |S_u|\,du < \infty$ and $\mathbb E\int_0^\infty e^{-ru} |F_u|\,du < \infty$ imply that 
 \[
 \left|\mathbb E \int_0^\infty e^{-rt}(F_t-S_t)\,dt\right| \leq \mathbb E \int_0^\infty e^{-rt}\left|F_t-S_t\right|\,dt \leq \mathbb E \int_0^\infty e^{-rt}|F_t|+|-S_t|\,dt < \infty\,.

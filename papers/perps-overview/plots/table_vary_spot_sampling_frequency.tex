@@ -1,15 +1,19 @@
-\begin{tabular}{llrrr}
+\begin{table}[!htbp]
+\caption{Impact of varying spot sampling frequency}
+\label{tbl:spot_sampling}
+\begin{tabular}{lrr}
 \toprule
- & spot_funding_frequency & spot_rr & perp_rr & sum_funding_payments \\
+frequency & perp rate of return & sum of funding payments \\
 \midrule
-0 & 7d & -7.01E-02 & 7.63E-02 & -4.28E+03 \\
-1 & 1d & -7.01E-02 & -5.78E-02 & -3.63E+02 \\
-2 & 12h & -7.01E-02 & -6.40E-02 & -1.83E+02 \\
-3 & 6h & -7.01E-02 & -6.55E-02 & -1.40E+02 \\
-4 & 3h & -7.01E-02 & -6.78E-02 & -7.14E+01 \\
-5 & 1h & -7.01E-02 & -6.86E-02 & -4.71E+01 \\
-6 & 30min & -7.01E-02 & -6.86E-02 & -4.79E+01 \\
-7 & 10min & -7.01E-02 & -6.86E-02 & -4.68E+01 \\
-8 & 5min & -7.01E-02 & -6.86E-02 & -4.76E+01 \\
+7d & 0.076308 & -4.28E+03 \\
+1d & -0.057820 & -3.63E+02 \\
+12h & -0.063995 & -1.83E+02 \\
+6h & -0.065458 & -1.40E+02 \\
+3h & -0.067809 & -7.14E+01 \\
+1h & -0.068639 & -4.71E+01 \\
+30min & -0.068613 & -4.79E+01 \\
+10min & -0.068650 & -4.68E+01 \\
+5min & -0.068625 & -4.76E+01 \\
 \bottomrule
 \end{tabular}
+\end{table}

@@ -40,9 +40,18 @@ class UI:
             end_date=end_date,
             spot_curve=self.spot_curve,
             perp_curve=self.perp_curve,
-            funding_payment_frequency = dt.datetime.combine(dt.date.min, funding_payment_frequency) - dt.datetime.min,
-            spot_sampling_frequency = dt.datetime.combine(dt.date.min, spot_sampling_frequency) - dt.datetime.min,
-            perp_sampling_frequency = dt.datetime.combine(dt.date.min, perp_sampling_frequency) - dt.datetime.min,
+            funding_payment_frequency=dt.datetime.combine(
+                dt.date.min, funding_payment_frequency
+            )
+            - dt.datetime.min,
+            spot_sampling_frequency=dt.datetime.combine(
+                dt.date.min, spot_sampling_frequency
+            )
+            - dt.datetime.min,
+            perp_sampling_frequency=dt.datetime.combine(
+                dt.date.min, perp_sampling_frequency
+            )
+            - dt.datetime.min,
             interest_rate=interest_rate,
             clamp_lower_bound=clamp_lower_bound,
             clamp_upper_bound=clamp_upper_bound,
@@ -290,22 +299,25 @@ class UI:
         )
 
         dp1 = widgets.TimePicker(
-            value=dt.time(hour=8,minute=0,second=0),
+            value=dt.time(hour=8, minute=0, second=0),
             step=1,
             description="funding payment frequency",
-            style={"description_width": "250px", "width": 400})
-        
+            style={"description_width": "250px", "width": 400},
+        )
+
         dp2 = widgets.TimePicker(
-            value=dt.time(hour=0,minute=5,second=0),
+            value=dt.time(hour=0, minute=5, second=0),
             step=1,
             description="spot sampling frequency",
-            style={"description_width": "250px"})
-        
+            style={"description_width": "250px"},
+        )
+
         dp3 = widgets.TimePicker(
-            value=dt.time(hour=8,minute=0,second=30),
+            value=dt.time(hour=8, minute=0, second=30),
             step=1,
             description="perp sampling frequency",
-            style={"description_width": "250px"})
+            style={"description_width": "250px"},
+        )
 
         frequency_sliders = widgets.HBox(
             [dp1, dp2, dp3], layout=widgets.Layout(width="90%")

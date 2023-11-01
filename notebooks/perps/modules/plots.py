@@ -164,7 +164,7 @@ def plot_funding_periods(
             color="purple",
             label="perp: TWAP",
         )
-    
+
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%B %d"))
     ax.set_yticks(ax.get_yticks().tolist()[1:-1])  # needed to suppress the warning
     ax.set_yticklabels(["{:,.0f}".format(x) for x in ax.get_yticks()])
@@ -231,7 +231,7 @@ def plot_funding_periods(
     handles.extend(additional_handles)
     labels.extend(additional_labels)
 
-    ax.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=5)
+    ax.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=6)
 
     x_min, x_max = ax.get_xlim()
 
@@ -246,8 +246,7 @@ def plot_funding_periods(
             ax.set_xlim(right=min(x_max, right))
 
     spot_rr, perp_rr, sum_funding_payments = perps.summarise(
-        start_date, end_date,
-        funding_periods, spot_curve, perp_curve
+        start_date, end_date, funding_periods, spot_curve, perp_curve
     )
     txt = f"metrics for position of size 1:\n  {'sum of payments':<19} = {sum_funding_payments:,.0f}\n  {'perp rate of return':<21} = {perp_rr:0.3%}\n  {'spot rate of return':<21} = {spot_rr:0.3%}"
     ax.get_figure().text(

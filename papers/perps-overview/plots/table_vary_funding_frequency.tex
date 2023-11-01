@@ -1,15 +1,19 @@
-\begin{tabular}{llrrr}
+\begin{table}[!htbp]
+\caption{Impact of varying funding frequency}
+\label{tbl:funding_frequency}
+\begin{tabular}{lrr}
 \toprule
- & funding_frequency & spot_rr & perp_rr & sum_funding_payments \\
+frequency & perp rate of return & sum of funding payments \\
 \midrule
-0 & 7d & -7.01E-02 & -6.56E-02 & -1.36E+02 \\
-1 & 1d & -7.01E-02 & -6.06E-02 & -2.81E+02 \\
-2 & 12h & -7.01E-02 & -6.30E-03 & -1.87E+03 \\
-3 & 6h & -7.01E-02 & 6.07E-02 & -3.83E+03 \\
-4 & 3h & -7.01E-02 & 1.85E-01 & -7.46E+03 \\
-5 & 1h & -7.01E-02 & 7.36E-01 & -2.36E+04 \\
-6 & 30min & -7.01E-02 & 1.46E+00 & -4.48E+04 \\
-7 & 10min & -7.01E-02 & 4.33E+00 & -1.29E+05 \\
-8 & 5min & -7.01E-02 & 8.68E+00 & -2.56E+05 \\
+7d & -0.065605 & -1.36E+02 \\
+1d & -0.060621 & -2.81E+02 \\
+12h & -0.006304 & -1.87E+03 \\
+6h & 0.060692 & -3.83E+03 \\
+3h & 0.185106 & -7.46E+03 \\
+1h & 0.736055 & -2.36E+04 \\
+30min & 1.464369 & -4.48E+04 \\
+10min & 4.332158 & -1.29E+05 \\
+5min & 8.684744 & -2.56E+05 \\
 \bottomrule
 \end{tabular}
+\end{table}

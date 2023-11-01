@@ -2,3 +2,11 @@
 .DS_Store
 .vscode/
 *.pyc
+papers/perps-overview/missfont.log
+papers/perps-overview/perps-overview.aux
+papers/perps-overview/perps-overview.fdb_latexmk
+papers/perps-overview/perps-overview.fls
+papers/perps-overview/perps-overview.log
+.gitignore
+papers/perps-overview/perps-overview.synctex(busy)
+papers/perps-overview/perps-overview.out

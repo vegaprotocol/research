@@ -177,8 +177,7 @@ def test_payment_summarize():
     fp3 = perps.FundingPeriod(dt.datetime(2019, 6, 6), end, payment3, -1, -1, -1)
 
     spot_rate_of_return, perp_rate_of_return, sum_funding_payments = perps.summarise(
-        start, end,
-        np.array([fp1, fp2, fp3]), spot_curve, perp_curve
+        start, end, np.array([fp1, fp2, fp3]), spot_curve, perp_curve
     )
 
     assert payment1 + payment2 + payment3 == sum_funding_payments

@@ -150,7 +150,7 @@ def funding_periods(
 ):
     save = not plot_save_path is None
     ax = None
-    
+
     if show:
         plt.ion()
     else:
@@ -158,7 +158,7 @@ def funding_periods(
         plt.clf()
 
     if save or show:
-         _, ax = plt.subplots(1, 1, figsize=(15, 5))
+        _, ax = plt.subplots(1, 1, figsize=(15, 5))
 
     funding_schedule = perps.create_schedule(
         start_date,
