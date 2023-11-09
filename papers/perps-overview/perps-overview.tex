@@ -269,7 +269,7 @@ However as the team has not identified any specific use case for the these addit
 Irrespective of what formulation is chosen for the funding payment it may in some cases be desirable to scale or clamp the resulting figure before calculating the cashflows to be exchanged between parties. Take the funding payment calculated using \eqref{eqn:modified_funding_payment} and denoted $\tilde G_{t_k}$. Then we propose to calculate the funding payment per position of size 1 as:
 
 $$
-\bar G_{t_k} = k \min \Big (c\hat S_{t_k},\max \big(d\hat S_{t_k}, \tilde G_{t_k} \big ) \Big )
+\bar G_{t_k} =  \min \Big (c\hat S_{t_k},\max \big(d\hat S_{t_k}, k \tilde G_{t_k} \big ) \Big )
 $$
 where $c$, $d$ and $k$ are constants such that $ c \ge d $ and $k\geq 0$.
 
