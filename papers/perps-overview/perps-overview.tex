@@ -94,9 +94,6 @@
 \pagenumbering{gobble}
 
 \maketitle
-\pagebreak
-\input{../disclaimer}
-\pagebreak
 
 \tableofcontents
 \pagebreak
@@ -106,7 +103,9 @@
 \pagenumbering{arabic}
 \rhead{\rightmark}
 \lhead{Perpetual futures}
-\cfoot{\thepage}
+\rfoot{\thepage}
+\cfoot{}
+\lfoot{This entire document is~\copyright~\the\year, Gobalsky Labs Ltd. All rights reserved.}
 
 
 \section{Introduction}
@@ -242,29 +241,59 @@ where $a$ and $b$ are constants such that $ a \ge b $ and $r$ is the interest co
 
 \begin{figure}[!htb]
 \minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{./plots/r_0.0001_a_inf_b_-inf.png}
-  \caption{$\\r=0.01\%, a=-b=\infty.$}\label{fig:clamp1}
+  \includegraphics[width=\linewidth]{./plots/r_0.02_a_inf_b_-inf_c_inf_d_-inf_k_1.png}
+  \caption{$\\r=2\%,\ a=-b=\infty.$}\label{fig:clamp1}
 \endminipage\hfill
 \minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{./plots/r_0.0001_a_0.0005_b_-0.0005.png}
-  \caption{$\\r=0.01\%, a=-b=0.05\%.$}\label{fig:clamp22}
+  \includegraphics[width=\linewidth]{./plots/r_0.02_a_0.05_b_-0.05_c_inf_d_-inf_k_1.png}
+  \caption{$\\r=2\%,\ a=-b=5\%.$}\label{fig:clamp22}
 \endminipage\hfill
 \minipage{0.32\textwidth}%
-  \includegraphics[width=\linewidth]{./plots/r_0.0001_a_0_b_0.png}
-  \caption{$\\r=0.01\%, a=-b=0.$}\label{fig:clamp3}
+  \includegraphics[width=\linewidth]{./plots/r_0.02_a_0_b_0_c_inf_d_-inf_k_1.png}
+  \caption{$\\r=2\%,\ a=-b=0\%.$}\label{fig:clamp3}
 \endminipage
 \end{figure}
 
 Since Vega Protocol strives to offer adequate flexibility to allow community to shape the markets according to its needs we choose to allow reproducing these feature by prescribing the following form for the implementation of the funding payment component described in section ~\ref{sec:funding_payment}. That modified funding payment $\tilde G_{t_k}$ is then:
 
-$$
+\begin{equation}\label{eqn:modified_funding_payment}
 \tilde G_{t_k} = \hat F_{t_k} - \hat S_{t_k} + \min \Bigg (a\hat S_{t_k},\max \bigg(b\hat S_{t_k}, e^{r_c(t_k-t_{k-1})} \hat S_{t_k} - \hat F_{t_k} \bigg ) \Bigg ), 
-$$
+\end{equation}
+
 where $r_c$ is the continuous rate of return set for the market (can be updated via governance) and $[t_k,t_{k-1})$ is the time interval in years for which the funding payment is being calculated.
 
 However as the team has not identified any specific use case for the these additional parameters we recommend initially setting $a=b=r_c=0$, unless setting them to different values solves a specific issue identified by the community.
 
-Some of the properties that can be observed in various venues, but which we deliberately choose not to reproduce are discussed in the remaining subsections.
+\subsubsection{Funding payment scaling and clamping}
+
+Irrespective of what formulation is chosen for the funding payment it may in some cases be desirable to scale or clamp the resulting figure before calculating the cashflows to be exchanged between parties. Take the funding payment calculated using \eqref{eqn:modified_funding_payment} and denoted $\tilde G_{t_k}$. Then we propose to calculate the funding payment per position of size 1 as:
+
+$$
+\bar G_{t_k} = k \min \Big (c\hat S_{t_k},\max \big(d\hat S_{t_k}, \tilde G_{t_k} \big ) \Big )
+$$
+where $c$, $d$ and $k$ are constants such that $ c \ge d $ and $k\geq 0$.
+
+The constants $c$ and $d$ can be used to set the bounds on the resulting funding rate. While this may reduce the gains of parties expecting the positive funding payment and thus reduce the pressure for the perpetual futures market to move more in line with the underlying spot market it may still be a worthy consideration as it can give parties a bound on the maximum loss they can expect in a funding period. 
+
+The constant $k$ can be used to tune the trading pressure parties with negative funding payments will experience and thus implicitly the responsiveness of the perpetual futures market to the changes in the underlying spot market. It could be useful in scenarios where the market designer wishes to have a certain funding payment frequency while mimicking the aggregate funding payment magnitude of a market with a different funding frequency.
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{./plots/r_0.02_a_0_b_0_c_inf_d_-inf_k_2.png}
+   \caption{$\\r=2\%,\ a=-b=0,\\ k=2\%,\ c=-d=0.$}\label{fig:clamp1}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{./plots/r_0.02_a_0_b_0_c_0.05_d_-0.05_k_2.png}
+  \caption{$\\r=2\%,\ a=-b=0,\\ k=2\%,\ c=-d=5\%.$}\label{fig:clamp22}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[width=\linewidth]{./plots/r_0.02_a_0.05_b_-0.05_c_0.05_d_-0.05_k_2.png}
+  \caption{$\\r=2\%,\ a=-b=5\%,\\ k=2\%,\ c=-d=5\%.$}\label{fig:clamp3}
+\endminipage
+\end{figure}
+
+\subsection{Omitted properties}
+Some of the properties that can be observed in various venues, but which we deliberately choose not to reproduce are discussed below.
 
 \subsubsection{Tolerance region}
 
