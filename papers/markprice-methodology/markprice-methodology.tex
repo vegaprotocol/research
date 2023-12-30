@@ -1,0 +1,512 @@
+\documentclass[10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, lmargin=3cm, rmargin=3cm, tmargin=3cm, bmargin=2.8cm]{geometry}
+% \usepackage{charter}
+\usepackage{mathpazo}
+% \usepackage{newcent}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{paralist}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage[UKenglish]{babel}
+\usepackage{epigraph}
+\usepackage{bbm}
+\usepackage{todonotes}
+\usepackage[title, titletoc]{appendix}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{tocloft}
+\usepackage[normalem]{ulem}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{textcomp}
+% \usepackage{parskip}  % uncomment to remove paragraph indents
+%\usepackage{refcheck}
+
+% We don't want to see subsections of the appendices in the ToC
+\appto\appendices{\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}}
+\appto\listoffigures{\addtocontents{lof}{\protect\setcounter{tocdepth}{1}}}
+\appto\listoftables{\addtocontents{lot}{\protect\setcounter{tocdepth}{1}}}
+\addtocontents{toc}\protect\setcounter{tocdepth}{2}
+
+% Make bullets a little smaller
+\renewcommand\labelitemi{$\vcenter{\hbox{\footnotesize$\bullet$}}$}
+
+% Set up hyperlinks. Blue seems to be the only non-sucky default colour.
+%\definecolor{DarkBlueLinks}{RGB}{10,85,145}
+\definecolor{DarkBlueLinks}{RGB}{5,32,144} % more blue, less green
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=DarkBlueLinks,
+    filecolor=blue,      
+    urlcolor=blue,
+    citecolor=DarkBlueLinks,
+    pdftitle={Proposed Mark Price Methodology},
+  	pdfauthor={Vega Research},
+}
+
+%\usepackage{draftwatermark}
+%\SetWatermarkText{DRAFT}
+%\SetWatermarkScale{1.2}
+
+% Set reference names for autoref
+\addto\extrasUKenglish{
+    \renewcommand{\sectionautorefname}{Section}
+    \renewcommand{\subsectionautorefname}{Section}
+    \renewcommand{\subsubsectionautorefname}{Section}
+}
+
+% Auto-linked glossary entries. 
+% Format them in dashed underline/italic (uncomment one) to distinguish from other links.
+
+\newtheorem{proposition}{Proposition}
+
+% Add vertical space between paragraphs but not ToC entries
+\setlength{\parskip}{0.5em}
+\setlength\cftparskip{0 em}
+
+\author{Vega Research}
+\title{Proposed Mark Price Methodology}
+
+\date{
+    \vspace{2em}
+    \today\\
+    \vspace{0.5em}
+    {\footnotesize }
+    \vspace{2em}
+}
+
+
+
+\begin{document}
+\thispagestyle{empty} %\cleardoublepage
+\pagestyle{plain}
+\lhead[{}{}]       {{}{}}
+\rhead[{}{}]       {{}{}}
+\pagenumbering{gobble}
+
+\maketitle
+
+
+\pagestyle{fancyplain}
+\pagenumbering{arabic}
+\rhead{\rightmark}
+\lhead{Mark price methodology}
+\cfoot{\thepage}
+
+
+\section{Introduction}
+
+Mark price is used by Vega protocol~\cite{vega whitepaper} to calculate mark-to-market cashflows, feed the risk calculation~\cite{margins paper} and~\cite{margins spec}, to provide ``unrealised'' profit-and-loss (PnL) information, drive price monitoring~\cite{price monitoring spec} and last but not least determine funding payments for perpetual futures. 
+
+In the current implementation mark price is simply set to last trade price but this leads to a number of problems on markets where liquidity providers (LPs) actively quote limit order book prices but where trades seldom occur. i) no mark-to market cashflows may occur even when the order-book price has moved a long way from last trade price. ii) the best bid/ask may end up outside price monitoring bounds even if the evolution was ``slow''. iii) various parties may see the ``wrong'' (or unintuitive) PnL and then be surprised by a sudden large move when a new trade arrives which updates the mark price. iv) The funding payments may be ``off'' even if the external price feed is reliable. 
+
+To address the issues a more flexible mark price methodology is proposed, to be configured per market as appropriate. 
+Note that hypothetically on other markets than futures and perpetual futures one may wish to ``mark-to-model'' but we do not consider this here. 
+
+For perpetual futures markets there should be a ``mark price'' configuration and a ``market price for funding'' configuration so that the market can, potentially use different mark price for mark-to-market and price monitoring and completely different price for calculating funding. 
+
+%\section{Proposed mark price methodology}
+%
+%Let
+%\begin{itemize}
+%\item $P_s$ denote the ``price'' at time $s$ (this will be defined later precisely to come either from trades or from the order book);
+%\item $w_s$ denote the ``weight'' at time $s$ (again more details later). 
+%\item $\delta \geq 0$ be the ``lookback distance''. 
+%\item $K = K(s,t)$ be a ``decay kernel'' (to be defined later). 
+%\end{itemize}
+%
+%If $\delta = 0$ define the mark price at time $t\geq 0$ to be $m_t = P_t$. 
+%Otherwise, first let
+%\[
+%W(t-\delta, t) := \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,ds
+%\]
+%and define
+%\[
+%m_t := \frac{1}{W(t-\delta, t)} \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,P_s \,ds\,.
+%\]
+%As a sanity check note that if $P_s = P$ for all $s\in (t-\delta, t]$ we get 
+%\[
+%m_t := \frac{P}{W(t-\delta, t)} \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,ds = P\,.
+%\]
+%
+%To define the $P_s$ and $w_s$ we will need a few more parameters:
+%\begin{itemize}
+%\item $\Delta > 0$: sets when to switch from using trade prices to using order book prices.
+%\item $V\geq 0$: sets the slippage volume to use when deriving the price from the order book. Setting it to $0$ means you use the usual definition of mid price. 
+%\item $L=L(s)$: a function that, given time $s\geq 0$ reports the time of the most recent trade prior to $s$. 
+%\end{itemize}
+%With this we define
+%\[
+%P_s := 
+%\left\{
+%\begin{aligned}
+%	P^{\text{trade}}_s & \quad \text{if} \quad s - L(s) \leq \Delta\,,\\
+%	P^{\text{book}}_s & \quad \text{otherwise}\
+%\end{aligned}
+%\right.
+%\]
+%and
+%\[
+%w_s := 
+%\left\{
+%\begin{aligned}
+%	\text{trade volume at time $s$ of eligible trades} & \quad \text{if} \quad s - L(s) \leq \Delta\,,\\
+%	\text{volume of smallest position size} & \quad \text{otherwise}\,. 
+%\end{aligned}
+%\right.
+%\]
+%Here $P^{\text{trade}}_s$ is set to the price of the most recent trade prior to or at $s$. 
+%If the last trade is older than $\Delta$ we get the price from the order book:
+%\[
+%P^{\text{book}}_s :=
+%\frac12 \left(\text{sell vwap for volume $V$}+\text{buy vwap for volume $V$}\right)  \,\,\, \text{if there is volume $V$ on both sides}\,,
+%\]
+%and leave $P^{\text{book}}_s$ undefined when either side has insufficient volume. In this case also set $w_s = 0$. 
+%
+%When we say ``eligible trades'' we mean that we may want to exclude certain trades e.g. the network party trades as we do now but also perhaps others e.g. trades that re-balance the vAMM. 
+%
+%
+%Finally the decay kernel $K=K(s,t)$ can in principle be any function though in practice we would like to avoid floating point arithmetic. 
+%So let us propose
+%\[
+%K(s,t) = 1 - \alpha\frac{(t-s)^p}{\delta^p}
+%\]
+%with $\alpha \geq 0$ and $p\in \mathbb N$. This is polynomial decay with $K(t,t) = 1$ and $K(t-\delta,t) = 0$.
+%
+
+
+\section{Proposed mark / funding price methodology}
+We update the mark at the end of every mark price period and the funding price possibly at a different frequency (also set as network parameter specifying a period). 
+In the sequel both will be referred to as ``mark price period''.
+\begin{enumerate}
+\item 
+Existing network or market parameters that enter into this:
+\begin{enumerate}[i)]
+\item Length of mark price period given by $\delta = $\texttt{network.markPriceUpdateMaximumFrequency}.
+\end{enumerate}
+New market parameters that enter into this:
+\begin{enumerate}[i)]
+\item $\alpha \geq 0$ decay weight. 
+\item $p \in \mathbb N$ a decay power and in practice we'd want to support only like $p \in \{0,1,2,3\}$.
+\end{enumerate}
+
+Calculate $\hat P^{\text{trades}}$ which is simply trade-size-weighted average of all eligible trades over the mark price period. 
+Let $P_s$ to be price at time $s$ and $w_s$ the weight set as the volume traded at the price at time $s$.
+Let $\delta > 0$ be the mark price period length. 
+Let $\alpha \geq 0$ decay weight and $p\in \mathbb N$ a decay power. 
+With this define
+\[
+K(s,t) = 1 - \alpha\frac{(t-s)^p}{\delta^p}\,.
+\]
+and 
+\[
+W(t-\delta, t) := \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,ds
+\]
+so that finally
+\[
+\hat P_t := \frac{1}{W(t-\delta, t)} \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,P_s \,ds\,.
+\]
+As a sanity check note that if $P_s = P$ for all $s\in (t-\delta, t]$ we get 
+\[
+\hat P_t := \frac{P}{W(t-\delta, t)} \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,ds = P\,.
+\]
+
+
+\item 
+Existing network or market parameters or calculation outputs that enter into this:
+\begin{enumerate}[i)]
+\item $f_\text{initial scaling}$ is the \texttt{initial\_margin} in \texttt{market.margin.scalingFactors}.
+\item $f_\text{slippage}$ is the linear slippage factor in market proposal.
+\item $f_\text{risk}$ refers to either the long or short risk factors output by the risk model. 
+\end{enumerate}
+New market parameters that enter into this:
+\begin{enumerate}[i)]
+\item Let $C$ be some cash amount e.g. $500$ USDT would be entered as $500 00000$ respecting the $5$ asset decimals.
+\end{enumerate}
+
+
+Let $C$ be some cash amount e.g. $500$ USDT. 
+Calculate how much this can be leveraged to $N = C\frac{1}{f_{\text{risk}} + f_{\text{slippage}}} \frac{1}{f_{\text{initial scaling}}}$ i.e. you multiply $C$ by the maximum possible leverage.
+For sell side calculate $V_{\text{sell}} = \frac{N}{P_{\text{best ask}}}$ where you set $f_{\text{risk}}$ to be the one for long. 
+For buy side calculate $V_{\text{buy}} = \frac{N}{P_{\text{best bid}}}$ where you set $f_{\text{risk}}$ to be the one for short. 
+Calculate $\hat P^{\text{book}}$ which is the time average ``mid'' price seen on the book: if there is at least volume $V_{\text{sell}}$ on the sell side and at least $V_{\text{buy}}$ on the buy side:
+\[
+P^{\text{book}}_s :=
+\frac12 \left(\text{sell vwap for volume $V_{\text{sell}}$}+\text{buy vwap for volume $V_{\text{buy}}$}\right)\,,
+\]
+if not, don't include it in the time average. 
+If $C$ (the initial cash amount to consider) is set to $0$ then it's the usual mid price.
+During auctions $P^{\text{book}}_s$ is set to the indicative uncrossing price.
+
+\item 
+New market parameters that enter into this:
+\begin{enumerate}[i)]
+\item Entire oracle definition for each of the oracles, in particular source and update freq / schedule. 
+\end{enumerate}
+
+Obtain $(P^{\text{oracle}}_i)_{i=1}^n$ if $n \in \{0\}\cup \mathbb N$ oracle sources are defined.
+\item Define $P^{\text{median}}:= \text{median}(\hat P^{\text{trades}}, \hat P^{\text{book}}, P^{\text{oracle}}_1, \ldots, P^{\text{oracle}}_n)$. 
+The median is calculated as follows: sort the prices in ascending or descending order. If $n$ is an odd number then choose the value that's in the middle of the sorted list. If you have even number add the two in the middle up and divide by $2$.
+\end{enumerate}
+To combine these numbers with we employ two possible functions 
+\[
+M=M((P_i)_{i=1}^{3+n}) = M(\hat P^{\text{trades}}, \hat P^{\text{book}}, P^{\text{oracle}}_1,\ldots,\hat P^{\text{oracle}}_n,P^{\text{median}})
+\] 
+which we set out below. 
+\begin{enumerate}
+\item 
+New market parameters that enter into this:
+\begin{enumerate}[i)]
+\item $(w_i)_{i=1}^{3+n}$ weights.
+\item $(\delta_i)_{i=1}^d$ specifying how old a source update can be before source is considered stale. If set to $0$ we'd want an update with the same vega time.
+\end{enumerate}
+
+We allow weights: take $(w_i)_{i=1}^{3+n}$. This allows in particular picking individual sources. 
+We also set $L^{i}=L^{i}(s)$, $i=1,\ldots,n+3$ be the functions which reports when a given price was last updated and $(\delta_i)_{i=1}^d$ values defining when a given price is too old. 
+From this we update the weights as follows:
+\[
+\hat w^i := \frac{w_i \mathbf{1}_{t-L^i(t)<\delta^i}}{\sum_j w_j\mathbf{1}_{t-L^j(t)<\delta^j}}\,.
+\]
+I.e. we pick those that have been updated recently enough and we re-weight. 
+\[
+M((P_i)_{i=1}^{3+n}) = \sum_{i=1}^{n+3} \hat w^i P_i \,.
+\]
+\item 
+New market parameters that enter into this:
+\begin{enumerate}[i)]
+\item $(\delta_i)_{i=1}^d$ specifying how old a source update can be before source is considered stale. If set to $0$ we'd want an update with the same vega time.
+\end{enumerate}
+
+
+Set $L^{i}=L^{i}(s)$, $i=1,\ldots,n+3$ be the functions which reports when a given price was last updated and $(\delta_i)_{i=1}^d$ values defining when a given price is too old. 
+If for all $t-L_i(t) > \delta_i$ then all sources are stale and we do not update the mark price. 
+If at least for one $i$ we have $t-L_i(t) < \delta_i$ we do 
+\[
+M((P_i)_{i=1}^{3+n}) = \text{median}(\{P_i : t-L_i(t) < \delta_i\}) \,.
+\]
+I.e. we do a median of the non-stale prices. 
+%
+%
+%\item We allow using any of the three sources unless it's too old in which case we fallback onto a different source. 
+%Let $L^{i}=L^{i}(s)$: be function that, given time $s\geq 0$ reports the most recent update to price $i \in \{\text{trades}, \text{book},\text{oracle} \}$ prior to $s$. 
+%Fix $i \in \{\text{trades}, \text{book},\text{oracle} \}$ (primary source), $i' \in \{\text{trades}, \text{book},\text{oracle} \}$ (fallback source) and $\delta > 0$ maximum tolerated staleness and let 
+%\[
+%M(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}}) =
+%\left\{
+%\begin{aligned}
+%\hat P^{i} & \quad \text{if} \quad t - L^i(t) < \delta \,,\\
+%\hat P^{i'} & \quad \text{otherwise}\,.
+%\end{aligned}
+%\right.
+%\]
+%
+%\item We allow median of the three values i.e. order them and pick the middle value:
+%\[
+%M(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}}) = \text{median}(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}})\,.
+%\]
+\end{enumerate}
+
+
+
+%\section{Alternative proposed mark price methodology}
+%
+%We will have three price sources to consider: $P^{\text{trades}}$, $P^{\text{book}}$ and $P^{\text{oracle}}$. 
+%
+%
+%Each of these we optionally process using time averaging (e.g. moving average) to produce $\hat P^{\text{trades}}$, $\hat P^{\text{book}}$ and $\hat P^{\text{oracle}}$.
+%
+%Once we have those we use a function $M=M(\hat P^{\text{trades}}$, $\hat P^{\text{book}}, \hat P^{\text{oracle}})$ which can take these three numbers and combine them as it wishes (we'll give examples below). 
+%
+%
+%\begin{itemize}
+%\item $P \in \{P^{\text{trades}}, P^{\text{book}}, P^{\text{oracle}}\}$ denote the ``price''.
+%\item $w \in \{w^{\text{trades}}, w^{\text{book}}, w^{\text{oracle}}\}$ denote the ``weight'' at time $s$ (again more details later) for each source. 
+%\item $\delta \in \{\delta^{\text{trades}}, \delta^{\text{book}}, \delta^{\text{oracle}}\} \geq 0$ be the ``lookback distance'' for each source.
+%\item $K = K(s,t)$ be a ``decay kernel'' (to be defined later) and again $K \in \{K^{\text{trades}}, K^{\text{book}}, K^{\text{oracle}}\}$ i.e. each source can do different averaging. 
+%\end{itemize}
+%
+%If $\delta = 0$ define the processed price at time $t\geq 0$ to be $\hat P_t = P_t$. 
+%Otherwise, first let
+%\[
+%W(t-\delta, t) := \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,ds
+%\]
+%and define
+%\[
+%\hat P_t := \frac{1}{W(t-\delta, t)} \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,P_s \,ds\,.
+%\]
+%As a sanity check note that if $P_s = P$ for all $s\in (t-\delta, t]$ we get 
+%\[
+%\hat P_t := \frac{P}{W(t-\delta, t)} \int_{(t-\delta) \vee 0}^t K(s,t) w_s \,ds = P\,.
+%\]
+%
+%To define how we obtain $P^{\text{book}}$ define
+%$V\geq 0$ which sets the slippage volume to use when deriving the price from the order book. Setting it to $0$ means you use the usual definition of mid price. 
+%Define the price from the order book:
+%\[
+%P^{\text{book}}_s :=
+%\frac12 \left(\text{sell vwap for volume $V$}+\text{buy vwap for volume $V$}\right)  \,\,\, \text{if there is volume $V$ on both sides}\,,
+%\]
+%and leave $P^{\text{book}}_s$ undefined when either side has insufficient volume. In this case also set $w^{\text{book}}_s = 0$. 
+%
+%
+%The decay kernel $K=K(s,t)$ can in principle be any function though in practice we would like to avoid floating point arithmetic. 
+%Here $s$ is basically some time in the past and $t$ is the present time.  
+%
+%\begin{enumerate}
+%\item We want moving averages across some window in the past: let $\delta^{\text{start}} \geq 0$ and $0 \leq \delta^{\text{end}} \leq \delta^{\text{start}}$
+%\[
+%K(s,t) = 
+%\left\{
+%\begin{aligned}
+%1 & \quad \text{if} \quad s \in [t-\delta^{\text{start}},t-\delta^{\text{end}})\,,  \\
+%0 & \quad \text{otherwise}\,.  	
+%\end{aligned}
+%\right.
+%\]
+%\item We also want decay with time, over a window. Fix $\delta > 0$ the window length, $\alpha \geq 0$ decay weight and $p\in \mathbb N$ a decay power. With this define
+%\[
+%K(s,t) = 1 - \alpha\frac{(t-s)^p}{\delta^p}\,.
+%\]
+%\end{enumerate}
+%
+%
+%Finally, we need to combine these numbers with $M=M(\hat P^{\text{trades}}$, $\hat P^{\text{book}}, \hat P^{\text{oracle}})$.
+%\begin{enumerate}
+%\item We allow weighted average: take $(w_i)_{i=1,2,3}$ s.t. $\sum_i w_i = 1$ and note this allows picking individual sources:
+%\[
+%M(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}}) = w_1 \hat P^{\text{trades}} + w_2  \hat P^{\text{book}} + w_3 \hat P^{\text{oracle}})\,.
+%\]
+%\item We allow using any of the three sources unless it's too old in which case we fallback onto a different source. 
+%Let $L^{i}=L^{i}(s)$: be function that, given time $s\geq 0$ reports the most recent update to price $i \in \{\text{trades}, \text{book},\text{oracle} \}$ prior to $s$. 
+%Fix $i \in \{\text{trades}, \text{book},\text{oracle} \}$ (primary source), $i' \in \{\text{trades}, \text{book},\text{oracle} \}$ (fallback source) and $\delta > 0$ maximum tolerated staleness and let 
+%\[
+%M(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}}) =
+%\left\{
+%\begin{aligned}
+%\hat P^{i} & \quad \text{if} \quad t - L^i(t) < \delta \,,\\
+%\hat P^{i'} & \quad \text{otherwise}\,.
+%\end{aligned}
+%\right.
+%\]
+%\item We allow median of the three values i.e. order them and pick the middle value:
+%\[
+%M(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}}) = \text{median}(\hat P^{\text{trades}}, \hat P^{\text{book}}, \hat P^{\text{oracle}})\,.
+%\]
+%\end{enumerate}
+
+
+\begin{thebibliography}{10}
+
+%\bibitem{he:fundamentals}
+%S. He and A. Manela and O. Ross and V. von Wachter. Fundamentals of Perpetual Futures. {\em arXiv}:2212.06888, 2023.
+
+%\bibitem{derman:kani:riding} 
+%Derman, E. and Kani, I., Riding on a smile, {\em Risk Magazine}, 1994.
+%
+%\bibitem{dupire:pricing} 
+%Dupire, B., Pricing and hedging with smiles, {\em Mathematics of Derivative Securities}, Cambridge Uni. Press 1997.
+%
+%\bibitem{carr madan}
+%P. Carr and D. Madan. Option valuation using the fast Fourier transform.
+%{\em J. Comput. Finance}, 2, 61-–73, 1998.
+%
+%\bibitem{cont tankov}
+%R. Cont and P. Tankov. {\em Financial Modelling with Jump Processes}. Chapman \& Hall CRC. 2004.
+%
+%\bibitem{composing_contracts} 
+%S. P. Jones, J.-M. Eber and J. Seward. Composing contracts: an adventure in financial engineering. In: Oliveira J.N., Zave P. (eds) FME 2001: Formal Methods for Increasing Software Productivity. Springer 2001.
+%
+%\bibitem{glasserman:monte} P. Glasserman. {\em Monte Carlo Methods in Financial Engineering}. Springer 2004.
+%
+%\bibitem{follmer:schied}
+%H. F\"ollmer and A. Schied. {\em Convex and coherent risk measures}.\\ 
+%\href{https://www.math.hu-berlin.de/~foellmer/papers/CCRM.pdf}{https://www.math.hu-berlin.de/$\sim$foellmer/papers/CCRM.pdf}, 2008.
+%
+%\bibitem{broadie:du:moallemi}
+%M. Broadie, Y. Du and C. C. Moallemi. Risk Estimation via Regression. {\em Operations Research}, \href{https://doi.org/10.1287/opre.2015.1419}{63(5), 1077--1097}, 2015.
+%
+%\bibitem{emmbrechts:wang}
+%P. Embrechts and R. Wang. {\em Seven proofs for the subadditivity of expected shortfall}.\\
+%\href{https://people.math.ethz.ch/~embrecht/ftp/Seven_Proofs.pdf}{https://people.math.ethz.ch/$\sim$embrecht/ftp/Seven\_Proofs.pdf}, 2015.
+%
+%\bibitem{rnap}
+%D. \v{S}i\v{s}ka. {\em Risk-neutral asset pricing}.\\
+%\href{http://www.maths.ed.ac.uk/~dsiska/RNAP-Notes.pdf}{http://www.maths.ed.ac.uk/$\sim$dsiska/RNAP-Notes.pdf}, 2017.
+%
+%\bibitem{mcm}
+%D. \v{S}i\v{s}ka. {\em Monte-Carlo methods}.\\
+%\href{http://www.maths.ed.ac.uk/~dsiska/MonteCarloMethods.pdf}{http://www.maths.ed.ac.uk/$\sim$dsiska/MonteCarloMethods.pdf}, 2018.
+%
+%
+%\bibitem{belomestny variance}
+%D. Belomestny, L. Iosipoi and N. Zhivotovskiy. Variance reduction via empirical variance minimization: convergence and complexity. 
+%{\em \href{https://arxiv.org/abs/1712.04667}{arXiv:1712.04667}}, 2017.
+%
+%\bibitem{giles multilevel nested}
+%M. B. Giles and A.-L. Haji-Ali. Multilevel nested simulation for efficient risk estimation. {\em \href{https://arxiv.org/abs/1802.05016}{arXiv:1802.05016}}, 2018.
+
+\bibitem{vega whitepaper}
+G. Danezis, D. Hrycyszyn, B. Mannerings, T. Rudolph and D. \v{S}i\v{s}ka. Vega Protocol: A liquidity incentivising trading protocol for smart financial products. {\em \href{https://vega.xyz/papers/}{Vega research paper}}, 2018.
+
+\bibitem{margins paper}
+D. \v{S}i\v{s}ka. Margins and Credit Risk on Vega. {\em \href{https://vega.xyz/papers/}{Vega research paper}}, 2019.
+
+\bibitem{margins spec}
+Vega protocol specifications. Margin calculator.\\ {\em \href{https://github.com/vegaprotocol/specs/blob/master/protocol/0019-MCAL-margin_calculator.md}{https://github.com/vegaprotocol/specs/blob/master/protocol/0019-MCAL-margin\_calculator.md}}.
+
+\bibitem{price monitoring spec}
+Vega protocol specifications. Price monitoring.\\ {\em \href{https://github.com/vegaprotocol/specs/blob/master/protocol/0032-PRIM-price_monitoring.md}{https://github.com/vegaprotocol/specs/blob/master/protocol/0032-PRIM-price\_monitoring.md}}.
+
+
+
+%\bibitem{vidales siska szpruch}
+%M. Sabate-Vidales, D. \v{S}i\v{s}ka and L. Szpruch. 
+%Unbiased Deep Solvers for Linear Parametric PDEs. {\em \href{https://arxiv.org/abs/1810.05094}{arXiv:1810.05094}}, 2018.
+%
+%\bibitem{siska calibration}
+%D. \v{S}i\v{s}ka. Incentives for Model Calibration on Decentralized Derivatives Exchanges: Consensus in Continuum. {\em \href{https://dx.doi.org/10.2139/ssrn.3534272}{SSRN}}, 2020. 
+
+%\bibitem{bjork:arbitrage} T.~Bj\"ork. {Arbitrage Theory in Continous Time}. Oxford University Press, 2009.
+
+%\bibitem{brigo:mercurio}
+%D. Brigo and F. Mercurio.  {\em Interest Rate Models - Theory and Practice}, Springer, 2006.
+
+%\bibitem{delbaen:schachermayer} 
+%F.~Delbaen and W.~Schachermayer. 
+%A general version of the fundamental theorem of asset
+%pricing. {\em Math. Ann.} 300(3), 463–520, 1994.
+
+%\bibitem{filipovic:term}
+%D.~Filipovic. {\em Term Structure Models}. Springer, 2009.
+
+%\bibitem{gut:intermediate} A. Gut. {\em An Intermediate Course in Probability}. Springer 2009.
+
+%\bibitem{karatzas:shereve:brownian} I.~Karatzas and S. E.~Shreve. {\em Brownian Motion and Stochastic Calculus}. Springer 1991. 
+
+%\bibitem{kolmogorov:fomin:real} A.~N.~Kolmogorov and S.~V.~Fomin.
+%{\em Introductory Real Analysis}. Dover, 1975.
+
+%\bibitem{glasserman:monte} P. Glasserman. {\em Monte Carlo Methods in Financial Engineering}. Springer 2004.
+
+%\bibitem{gut:intermediate} A. Gut. {\em An Intermediate Course in Probability}. Springer 2009.
+
+%\bibitem{grimmett:stirzaker:probability} G. Grimmett and D. Stirzaker. {\em Probability and Random Processes}. Third Edition. Oxford University Press 2001.
+
+%\bibitem{oksendal:stochastic} B. {\O}ksendal. {\em Stochastic Differential Equations}. Springer 2003.
+
+%\bibitem{ross:a:first} S. Ross. {\em A First Course in Probability}. Fifth Edition. Prentice--Hall 1998.
+%\bibitem{capinski:kopp:measure} M. Capinski and P. E.~Kopp. {\em Measure, Integral and Probability}. Springer 2004.
+
+%\bibitem{grimmett:stirzaker:probability} G. R. Grimmett and D. R.~Stirzaker. {\em Probability and Random Processes}. Oxford University Press 2001.
+
+\end{thebibliography}
+
+
+\end{document}
