@@ -256,8 +256,15 @@ New market parameters that enter into this:
 \end{enumerate}
 
 Obtain $(P^{\text{oracle}}_i)_{i=1}^n$ if $n \in \{0\}\cup \mathbb N$ oracle sources are defined.
-\item Define $P^{\text{median}}:= \text{median}(\hat P^{\text{trades}}, \hat P^{\text{book}}, P^{\text{oracle}}_1, \ldots, P^{\text{oracle}}_n)$. 
+\item Set $L^{i}=L^{i}(s)$, $i=1,\ldots,n+2$ to be the functions which reports when a given price source from the list above was last updated and $(\delta_i)_{i=1}^d$ values defining when a given price is too old. 
+If for all $t-L_i(t) > \delta_i$ then all sources are stale and we do not update this source. 
+If at least for one $i$ we have $t-L_i(t) < \delta_i$ we do 
+\[
+M((P_i)_{i=1}^{2+n}) = \text{median}(\{P_i : t-L_i(t) < \delta_i\}) \,.
+\]
 The median is calculated as follows: sort the prices in ascending or descending order. If $n$ is an odd number then choose the value that's in the middle of the sorted list. If you have even number add the two in the middle up and divide by $2$.
+The median price source value should update whenever any of its input price sources have been updated or whenever time has passed and a previously current source has gone stale.
+The median price source will have update time set to the latest time any of the input sources were updated (it will not be set to the time when it was last recalculated just because an input has gone stale).
 \end{enumerate}
 To combine these numbers with we employ two possible functions 
 \[
@@ -289,7 +296,7 @@ New market parameters that enter into this:
 \end{enumerate}
 
 
-Set $L^{i}=L^{i}(s)$, $i=1,\ldots,n+3$ be the functions which reports when a given price was last updated and $(\delta_i)_{i=1}^d$ values defining when a given price is too old. 
+Set $L^{i}=L^{i}(s)$, $i=1,\ldots,n+3$ to be the functions which reports when a given price was last updated and $(\delta_i)_{i=1}^d$ values defining when a given price is too old. 
 If for all $t-L_i(t) > \delta_i$ then all sources are stale and we do not update the mark price. 
 If at least for one $i$ we have $t-L_i(t) < \delta_i$ we do 
 \[
