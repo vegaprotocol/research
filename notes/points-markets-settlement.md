@@ -48,7 +48,7 @@ The following terms (with suggested values in brackets) used in the definitions 
 : The percentage of issued points that must be eligible for the conversion
 
 `Liquidity Threshold` (5.00%)
-: The percentage of issued points that must be eligible for the conversion
+: The percentage of issued points that must be met by the bid depth (quantity of resting buy orders or points otherwise able to be sold) in the market within `valid slippage` (%) of the current market price.
 
 `Valid Slippage` (20.00%)
 : The range around the current market price at which available bids are deemed to constitute ‘liquidity’ for the purpose of an ***Airdrop Event*** in which points have become tradable.
