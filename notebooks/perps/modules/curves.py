@@ -102,6 +102,12 @@ class SuperimposedCurve:
             ret += self.curve_2(x)
         return ret
 
+class DiscreteCurve:
+    def __init__(self, map: dict[dt.datetime,float]):
+        self.map = map
+    
+    def __call__(self, x):
+        return self.map[x]
 
 def create_curve_from_file(
     dir, scaling=1, horizontal_shift=0, vertical_shift=0, ax=None
