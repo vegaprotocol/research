@@ -123,7 +123,7 @@ class UI:
 
         spot_base_cb = widgets.Checkbox(value=True, description="Spot: use base curve")
         spot_base_path = widgets.Select(
-            options=sorted(glob.glob("{}/*".format("./data/")))
+            options=sorted(glob.glob("{}/*".format(self.curve_folder_path)))
         )
 
         spot_slider_mult = widgets.FloatSlider(
@@ -190,7 +190,7 @@ class UI:
         perp_base_cb = widgets.Checkbox(value=True, description="Perps: use base curve")
 
         perp_base_path = widgets.Select(
-            options=sorted(glob.glob("{}/*".format("./data/")))
+            options=sorted(glob.glob("{}/*".format(self.curve_folder_path)))
         )
 
         perp_slider_mult = widgets.FloatSlider(
