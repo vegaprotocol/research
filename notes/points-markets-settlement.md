@@ -47,6 +47,9 @@ The following terms (with suggested values in brackets) used in the definitions 
 `Inclusivity Threshold` (40.00%)
 : The percentage of issued points that must be eligible for the conversion
 
+`Expiry Date/Time` (optional)
+: *If specified* the market would settle at a price of zero at the expiry date/time if no ***Airdrop Event*** has occurs on or before the specified date and time.
+
 `Liquidity Threshold` (5.00%)
 : The percentage of issued points that must be met by the bid depth (quantity of resting buy orders or points otherwise able to be sold) in the market within `valid slippage` (%) of the current price per point.
 
@@ -65,13 +68,17 @@ The following terms (with suggested values in brackets) used in the definitions 
 
 ### Airdrop Event
 
-An ***Airdrop Event*** is deemed to have occurred when one or more of the following conditions is satisfied:
+A normal ***Airdrop Event*** is deemed to have occurred when one or more of the following conditions is satisfied:
 
 1. At least `Inclusivity Threshold` (%) of all issued *points* have undergone *conversion* (defined above) since the inception of the points programme.
 
-2. It is no longer possible for *conversion* to happen, for example if the protocol ceases operation. (In this case the *mean conversion rate* will be zero.)
+2. Points become freely tradable by the majority of points holders to the extent that a current market price per point exists and the cumulative historic trading volume plus the available liquidity within `Valid Slippage` of the current market price is at least `Liquidity Threshold` (%) of the total number of issued points for a (not necessarily contiguous) period of no less than `Minimum Trading Window`.
 
-3. Points become freely tradable by the majority of points holders to the extent that a current market price per point exists and the cumulative historic trading volume plus the available liquidity within `Valid Slippage` of the current market price is at least `Liquidity Threshold` (%) of the total number of issued points for a (not necessarily contiguous) period of no less than `Minimum Trading Window`.  
+Additionally, a "null" ***Airdrop Event*** can be triggered when either of these conditions is satisfied:
+
+3. It is no longer possible for *conversion* to happen, for example if the protocol ceases operation. (In this case the *mean conversion rate* will be zero.)
+
+4. If the optional `Expiry Date/Time` variable is specified, and the `Expiry Date/Time` is reached without an ***Airdrop Event*** occurring, then the market shall settle at a price of zero (0).
 
 Note: adjustments to points balances such as normal or reverse splits (1 point becomes, 2 points, 10 points, 100 points, 0.5 points, 0.1 points, etc.), multiplying some users points by some value, etc. etc. do not constitute an *Airdrop Event* and simply impact the market price of a point as an issuance of new points would.
 
@@ -107,3 +114,11 @@ In the case where *points* become tradable (***Airdrop Event*** case 3):
 The price of either tokens or points will be determined by the volume-weighted average price for the spot token/point on each `Valid Exchange` with at least `Minimum Traded Base Volume` in trading volume over the `Minimum Trading Window`.
 If multiple `Valid Exchange`s list the spot price, the VWAP of each exchange will be averaged, weighting each for their total traded base currency volume.
 
+
+
+# Appendix I: Settling with UMA Optimistic Oracle v3
+
+WIP: to include
+- link to Github repo of template/example contract
+- guidance on generating wording for a specific case
+- including specifics of data formats, decimals, etc.
