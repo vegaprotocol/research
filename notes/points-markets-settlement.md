@@ -59,6 +59,9 @@ The following terms (with suggested values in brackets) used in the definitions 
 `Early Termination Period` (24 hours)
 : The amount of time before a scheduled ***Airdrop Announcement***
 
+`Valid Exchanges`
+: A list of exchanges on which the listing of a token/point would count as valid for measurement of price. These may include a list of major centralised exchanges such as Binance, ByBit or Coinbase or significant decentralised spot exchanges on the chains where the token is likely to be launched (Uniswap for Ethereum, Osmosis for Cosmos etc.).
+
 
 ### Airdrop Event
 
@@ -100,4 +103,7 @@ In cases where points have undergone *conversion* as defined above, or where *co
 In the case where *points* become tradable (***Airdrop Event*** case 3):
 
 - The *mean conversion rate* is the volume weighted average price (VWAP) of one point (converted to the `Base Asset` is necessary) over `Minimum Trading Window` period prior to the ***Airdrop Event***.
+
+The price of either tokens or points will be determined by the volume-weighted average price for the spot token/point on each `Valid Exchange` with at least `Minimum Traded Base Volume` in trading volume over the `Minimum Trading Window`.
+If multiple `Valid Exchange`s list the spot price, the VWAP of each exchange will be averaged, weighting each for their total traded base currency volume.
 
