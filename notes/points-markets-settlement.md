@@ -18,7 +18,7 @@ Conceptually, we define three things to enable fair and orderly settlement of a 
 3. The ***Valuation Algorithm*** for calculating the *mean conversion rate* that defines the value of one point at settlement.
 
 
-## Detailed definitions
+## Detailed definition
 
 ### Terms
 
@@ -122,3 +122,19 @@ WIP: to include
 - link to Github repo of template/example contract
 - guidance on generating wording for a specific case
 - including specifics of data formats, decimals, etc.
+
+In addition to this research note, the Vega engineering team have prepared a [template Solidity smart contract](https://github.com/vegaprotocol/uma-oracle-contract-template) that can be customised as needed and deployed in order to settle a market using the approach outlined in this note.
+
+The README file in that repository contains more details on its technical use and deployment. In order to use the contract, this abstract note needs to be turned into a more specific settlement specification that can be followed by users of the UMA Optimistic Oracle protocol. Suggested steps to do so are described below.
+
+1. Decide on the values for the variables listed above.
+
+2. Copy the text above under "Detailed definition", replacing the `variable markers` (i.e. variable names using inline code formatting) with your chosen values. Remove the variables section. (Alternatively, define the variables clearly in the variables section and leave it in place.)
+
+3. Edit the text, removing any parts that are not relevant for the given market and/or chosen variable values. Add an introduction and ensure it is as clear as possible exactly how to settle the market. Remember this research note provides a generic approach but it may be able to be simplified for a given case. **If this is not clear, or is ambiguous, then the settlement of the market may be at risk, so pay attention at this stage to enure the text for your specific use case is worded as well as possible.**
+
+4. Add Vega specifics like the required decimal places and/or integer conversions, the asset the price should be in (e.g. USDT, USDC, etc.), which should be the settlement asset of the market, not fiat USD nor the bond currency of the UMA oracle (unless this happens to be the same). 
+
+5. Upload the text somewhere immutable like IPFS.
+
+6. Deploy the contract and create the Vega market, referencing both the contract address (and chain) and the IPFS link to the text in the Vega market specification. Note that the text can be changed by governance on Vega by voting through a new IPFS link as a change to the market specification.
