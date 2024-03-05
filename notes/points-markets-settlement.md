@@ -118,11 +118,6 @@ If multiple `Valid Exchange`s list the spot price, the VWAP of each exchange wil
 
 # Appendix I: Settling with UMA Optimistic Oracle v3
 
-WIP: to include
-- link to Github repo of template/example contract
-- guidance on generating wording for a specific case
-- including specifics of data formats, decimals, etc.
-
 In addition to this research note, the Vega engineering team have prepared a [template Solidity smart contract](https://github.com/vegaprotocol/uma-oracle-contract-template) that can be customised as needed and deployed in order to settle a market using the approach outlined in this note.
 
 The README file in that repository contains more details on its technical use and deployment. In order to use the contract, this abstract note needs to be turned into a more specific settlement specification that can be followed by users of the UMA Optimistic Oracle protocol. Suggested steps to do so are described below.
