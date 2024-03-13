@@ -1,0 +1,577 @@
+{
+    "batchProposalSubmission": {
+        "rationale": {
+            "description": "This proposal creates a EigenLayer market cap futures market (testnet)",
+            "title": "EigenLayer MCAP / USDT (Futures market)"
+        },
+        "batchTerms": {
+            "closingTimestamp": TODO (unix timestamp),
+            "changes": [
+                {
+                    "enactmentTimestamp": TODO (unix timestamp),
+                    "newMarket": {
+                        "changes": {
+                            "instrument": {
+                                "name": "EigenLayer MCAP / USDT (Futures market)",
+                                "code": "EGLP/USDT.MCAP",
+                                "future": {
+                                    "settlementAsset": "bf1e88d19db4b3ca0d1d5bdb73718a01686b18cf731ca26adedf3c8b83802bba",
+                                    "quoteName": "USDT",
+                                    "dataSourceSpecForSettlementData": {
+                                        "external": {
+                                            "ethOracle": {
+                                                "sourceChainId": "5",
+                                                "address": "0x9a62e778c5De3D43F13bb3DE2cCE424392be6175",
+                                                "abi": "[{\"type\":\"function\",\"name\":\"getData\",\"inputs\":[{\"name\":\"identifier\",\"type\":\"tuple\",\"internalType\":\"struct SettlementOracle.Identifier\",\"components\":[{\"name\":\"liveness\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"bondCurrency\",\"type\":\"address\",\"internalType\":\"contract IERC20\"},{\"name\":\"minimumBond\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"maximumBond\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"marketCode\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"quoteName\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"enactmentDate\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"ipfsLink\",\"type\":\"string\",\"internalType\":\"string\"}]}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"},{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"nonpayable\"}]",
+                                                "method": "getData",
+                                                "args": [
+                                                    {
+                                                        "liveness": 28800,
+                                                        "bondCurrency": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+                                                        "minimumBond": 1000000000,
+                                                        "maximumBond": 100000000000,
+                                                        "ipfsLink": "ipfs:foo.bar",
+                                                        "marketCode": "EGLP/USDT.MCAP",
+                                                        "quoteName": "USDT",
+                                                        "enactmentDate": TODO "YYYY-MM-DDTHH:MM:SSZ"
+                                                    }
+                                                ],
+                                                "requiredConfirmations": "64",
+                                                "trigger": {
+                                                    "timeTrigger": {
+                                                        "every": "60"
+                                                    }
+                                                },
+                                                "filters": [
+                                                    {
+                                                        "key": {
+                                                            "name": "resolved",
+                                                            "type": "TYPE_BOOLEAN"
+                                                        },
+                                                        "conditions": [
+                                                            {
+                                                                "operator": "OPERATOR_EQUALS",
+                                                                "value": "true"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "key": {
+                                                            "name": "price",
+                                                            "type": "TYPE_INTEGER",
+                                                            "decimalPlaces": "18"
+                                                        },
+                                                        "conditions": [
+                                                            {
+                                                                "operator": "OPERATOR_GREATER_THAN_OR_EQUAL",
+                                                                "value": "0"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "normalisers": [
+                                                    {
+                                                        "name": "resolved",
+                                                        "expression": "$[0]"
+                                                    },
+                                                    {
+                                                        "name": "price",
+                                                        "expression": "$[1]"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "dataSourceSpecForTradingTermination": {
+                                        "external": {
+                                            "ethOracle": {
+                                                "sourceChainId": "5",
+                                                "address": "0x16422D4C44DF19ea61623B20974792846a74545c.",
+                                                "abi": "[{\"type\":\"function\",\"name\":\"getData\",\"inputs\":[{\"name\":\"identifier\",\"type\":\"tuple\",\"internalType\":\"struct TerminationOracle.Identifier\",\"components\":[{\"name\":\"bondCurrency\",\"type\":\"address\",\"internalType\":\"contract IERC20\"},{\"name\":\"minimumBond\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"maximumBond\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"liveness\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"marketCode\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"quoteName\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"enactmentDate\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"ipfsLink\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"conditionalSettlementOracle\",\"type\":\"address\",\"internalType\":\"contract SettlementOracle\"}]}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"},{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"nonpayablegetCachedDatagetCachedDatagetCachedData\"}]",
+                                                "method": "getData",
+                                                "args": [
+                                                    {
+                                                        "liveness": 28800,
+                                                        "bondCurrency": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+                                                        "minimumBond": 1000000000,
+                                                        "maximumBond": 100000000000,
+                                                        "ipfsLink": "ipfs:foo.bar",
+                                                        "marketCode": "EGLP/USDT.MCAP",
+                                                        "quoteName": "USDT",
+                                                        "enactmentDate": TODO "YYYY-MM-DDTHH:MM:SSZ""conditionalSettlementOracle": "0x9a62e778c5De3D43F13bb3DE2cCE424392be6175"
+                                                    }
+                                                ],
+                                                "requiredConfirmations": "64",
+                                                "trigger": {
+                                                    "timeTrigger": {
+                                                        "every": "60"
+                                                    }
+                                                },
+                                                "filters": [
+                                                    {
+                                                        "key": {
+                                                            "name": "resolved",
+                                                            "type": "TYPE_BOOLEAN"
+                                                        },
+                                                        "conditions": [
+                                                            {
+                                                                "operator": "OPERATOR_EQUALS",
+                                                                "value": "true"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "key": {
+                                                            "name": "terminated",
+                                                            "type": "TYPE_BOOLEAN"
+                                                        },
+                                                        "conditions": [
+                                                            {
+                                                                "operator": "OPERATOR_EQUALS",
+                                                                "value": "true"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "normalisers": [
+                                                    {
+                                                        "name": "resolved",
+                                                        "expression": "$[0]"
+                                                    },
+                                                    {
+                                                        "name": "terminated",
+                                                        "expression": "$[2]"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "dataSourceSpecBinding": {
+                                        "settlementDataProperty": "price",
+                                        "tradingTerminationProperty": "terminated"
+                                    }
+                                }
+                            },
+                            "decimalPlaces": "5",
+                            "metadata": [
+                                "base:EGLMCAP",
+                                "quote:USDT",
+                                TODO "enactment:YYYY-MM-DDTHH:MM:SSZ",
+                                "settlement:fromOracle",
+                                "class:fx/crypto",
+                                "oracle:uma",
+                                "sector:defi",
+                                "oracleChain:arbitrum",
+                                "domain:eigenlayer.xyz"
+                            ],
+                            "priceMonitoringParameters": {
+                                "triggers": [
+                                    {
+                                        "horizon": "120",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "60"
+                                    },
+                                    {
+                                        "horizon": "120",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "60"
+                                    },
+                                    {
+                                        "horizon": "120",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "60"
+                                    },
+                                    {
+                                        "horizon": "120",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "60"
+                                    },
+                                    {
+                                        "horizon": "120",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "60"
+                                    },
+                                    {
+                                        "horizon": "200",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "300"
+                                    },
+                                    {
+                                        "horizon": "200",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "300"
+                                    },
+                                    {
+                                        "horizon": "200",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "300"
+                                    },
+                                    {
+                                        "horizon": "200",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "300"
+                                    },
+                                    {
+                                        "horizon": "200",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "300"
+                                    },
+                                    {
+                                        "horizon": "400",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "900"
+                                    },
+                                    {
+                                        "horizon": "400",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "900"
+                                    },
+                                    {
+                                        "horizon": "400",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "900"
+                                    },
+                                    {
+                                        "horizon": "400",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "900"
+                                    },
+                                    {
+                                        "horizon": "400",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "900"
+                                    },
+                                    {
+                                        "horizon": "400",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "900"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "500",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "1800"
+                                    },
+                                    {
+                                        "horizon": "620",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "3600"
+                                    },
+                                    {
+                                        "horizon": "620",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "3600"
+                                    },
+                                    {
+                                        "horizon": "620",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "3600"
+                                    },
+                                    {
+                                        "horizon": "620",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "3600"
+                                    },
+                                    {
+                                        "horizon": "620",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "3600"
+                                    },
+                                    {
+                                        "horizon": "620",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "3600"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "750",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "7200"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    },
+                                    {
+                                        "horizon": "800",
+                                        "probability": "0.9999999",
+                                        "auctionExtension": "28800"
+                                    }
+                                ]
+                            },
+                            "liquidityMonitoringParameters": {
+                                "targetStakeParameters": {
+                                    "timeWindow": "3600",
+                                    "scalingFactor": 0.05
+                                },
+                                "triggeringRatio": "",
+                                "auctionExtension": "0"
+                            },
+                            "logNormal": {
+                                "riskAversionParameter": 0.001,
+                                "tau": 0.0006844626968,
+                                "params": {
+                                    "mu": 0,
+                                    "r": 0,
+                                    "sigma": 7
+                                }
+                            },
+                            "positionDecimalPlaces": "-2",
+                            "linearSlippageFactor": "0.001",
+                            "quadraticSlippageFactor": "",
+                            "liquiditySlaParameters": {
+                                "priceRange": "0.2",
+                                "commitmentMinTimeFraction": "0.5",
+                                "performanceHysteresisEpochs": "1",
+                                "slaCompetitionFactor": "0.8"
+                            },
+                            "liquidityFeeSettings": {
+                                "method": "METHOD_MARGINAL_COST"
+                            },
+                            "liquidationStrategy": {
+                                "disposalTimeStep": "5",
+                                "disposalFraction": "0.1",
+                                "fullDisposalSize": "10000",
+                                "maxFractionConsumed": "0.1"
+                            },
+                            "markPriceConfiguration": {
+                                "decayWeight": "0",
+                                "decayPower": "0",
+                                "cashAmount": "0",
+                                "sourceWeights": [],
+                                "sourceStalenessTolerance": [],
+                                "compositePriceType": "COMPOSITE_PRICE_TYPE_LAST_TRADE",
+                                "dataSourcesSpec": [],
+                                "dataSourcesSpecBinding": []
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
