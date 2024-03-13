@@ -4,7 +4,7 @@ This note is a response to community interest in creating futures markets on the
 
 It describes one way to define when and how to settle such markets given the broad possible number of outcomes and the lack of ahead-of-time certainty as to whether a token will launch and if it does, what the market capitalisation will be at launch.
 
-The approach is modelled on Credit Default Swaps (CDS) which are derivatives that are valued based on the probability of a company defaulting. Payouts are triggered when a “credit event” occurs, as defined by a set of explicit rules. Analogously, we define the concept of an “airdrop event” that can be similarly used to determine when and at what value to settle points futures.
+The approach is modelled on Credit Default Swaps (CDS) which are derivatives that are valued based on the probability of a company defaulting. Payouts are triggered when a “credit event” occurs, as defined by a set of explicit rules. Analogously, we define the concept of an “token launch” that can be similarly used to determine when and at what value to settle MCAP futures.
 
 
 ## Conceptual overview
