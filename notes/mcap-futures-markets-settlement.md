@@ -41,7 +41,7 @@ The following terms (with suggested values in brackets) used in the definitions 
 `Base Asset` (USDT)
 : The asset in which market capitalisation of the token is considered.
 
-`Inclusivity Threshold` (40.00%)
+`Minimum Cirulating Supply Fraction` (5.00%)
 : The percentage of tokens freely circulating out of a total number of project tokens.
 
 `Expiry Date/Time` (optional)
