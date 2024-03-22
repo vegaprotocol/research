@@ -62,7 +62,14 @@ The following terms (with suggested values in brackets) used in the definitions 
 
 ### MCAP Valuation Algorithm
 
-Once the token has launched and has been trading for `Minimum Trading Window` with sufficient `Liquidity Threshold` the valuation algorithm will calculate the MCAP as the time-weighted average price, over the minimum trading window times the total number of tokens.
+Once the token has launched and has been trading for `Minimum Trading Window` with sufficient `Liquidity Threshold` the valuation algorithm will calculate the MCAP as:
+```
+MCAP = TWAP x total_supply,
+```
+where
+
+- `TWAP` is the time-weighted average price of the token, over the minimum trading window and
+- `total_supply` the total number of tokens issued (whether circulating or not). 
 
 The settlement price is then obtained as the `fraction of mcap for 1 futures contract x MCAP` E.g. if the fraction of mcap for 1 futures contract is 1e-9 and the valuation algorithm delivers 2.3e10 as the relevant market capitalisation then the settlement price is `2.3e10 x 1e-9 = 23 USDT`. 
 
