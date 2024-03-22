@@ -17,7 +17,7 @@ Conceptually, we need to define four things to enable fair and orderly settlemen
 
 3. The ***MCAP Valuation Algorithm*** for calculating the relevant market capitalisation for settlement purposes.
 
-4. The ***futures contract settlemnt price***  is defined as soon as the MCAP valuation algorithm has provided an accepted answer hence the value of 1 futures contract on the vega chain can be obtained.
+4. The ***futures contract settlement price***  is defined as soon as the MCAP valuation algorithm has provided an accepted answer hence the value of 1 futures contract on the vega chain can be obtained.
 
  
 
