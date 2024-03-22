@@ -53,7 +53,7 @@ The following terms (with suggested values in brackets) used in the definitions 
 `Valid Slippage` (20.00%)
 : The range around the current market price at which available bids are deemed to constitute ‘liquidity’ for the purpose of the ***MCAP Valuation Algorithm***.
 
-`Minimum Trading Window` (48 hours)
+`Minimum Trading Window` (7 days)
 : The minimum amount of cumulative time over which a market meeting the liquidity and slippage thresholds must exist to trigger a successful ***MCAP Valuation Algorithm*** calculation.
 
 `Valid Exchanges`
