@@ -1,6 +1,6 @@
 # Research note: settling market capitalisation pre-launch token futures
 
-This note is a response to community interest in creating futures markets on the market capitalisation of various tokens prior to token launch.
+This note is a response to community interest in creating futures markets on the market capitalisation of various tokens prior to token launch, aka "MCAP futures" or "MCAP markets".
 
 It describes one way to define when and how to settle such markets given the broad possible number of outcomes and the lack of ahead-of-time certainty as to whether a token will launch and if it does, what the market capitalisation will be at launch.
 
