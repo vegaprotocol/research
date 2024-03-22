@@ -54,7 +54,7 @@ The following terms (with suggested values in brackets) used in the definitions 
 : The range around the current market price at which available bids are deemed to constitute ‘liquidity’ for the purpose of the ***MCAP Valuation Algorithm***.
 
 `Minimum Trading Window` (48 hours)
-: The minimum amount of cumulative time over which a market meeting the liquidity and slippage thresholds must exist to trigger a succesful ***MCAP Valuation Algorithm*** calculation.
+: The minimum amount of cumulative time over which a market meeting the liquidity and slippage thresholds must exist to trigger a successful ***MCAP Valuation Algorithm*** calculation.
 
 `Valid Exchanges`
 : A list of exchanges on which the listing of the token would count as valid for measurement of price. These may include a list of major centralised exchanges such as Binance, ByBit or Coinbase or significant decentralised spot exchanges on the chains where the token is likely to be launched (Uniswap for Ethereum, Osmosis for Cosmos etc.).
