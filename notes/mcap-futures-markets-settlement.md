@@ -9,7 +9,7 @@ The approach is modelled on Credit Default Swaps (CDS) which are derivatives tha
 
 ## Conceptual overview
 
-Conceptually, we need to define three things to enable fair and orderly settlement of an mcap futures market:
+Conceptually, we need to define four things to enable fair and orderly settlement of an mcap futures market:
 
 1. The ***fraction of mcap** that will correspond to one futures contract on the Vega chain. This fraction of mcap can be e.g. 1e-9 for a project who's anticipated market capitalisation is 1 billion USDT (so 1e9 USDT) at launch. Such contract would be expected to trade around 1 USDT.  
 
