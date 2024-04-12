@@ -98,6 +98,16 @@ In the event that the data required by the ***Valuation Algorithm*** are availab
 Note that due to the specifics of oracle protocols, etc. there may be a delay between the conditions for triggering an ***Imminent Airdrop Event*** and the data reaching a market on-chain and the cessation of trading.
 
 
+### Interim Airdrop Event
+
+An ***Interim Airdrop Event*** is deemed to have occurred when some asset with tradable value is issued to at least `Interim Inclusivity Threshold` (%) of all issued *points* (including points issued after the ***Interim Airdrop Event*** snapshot) without *conversion* of the points, i.e. accounts are still deemed to have a certain balance of points assigned to them which could receive further rewards in future.
+
+Once an ***Interim Airdrop Event*** has occurred and all input to the ***Valuation Algorithm*** is available, the *total issued market value* can be calculated. This should be calculated identically to the VWAP in the ***Valuation Algorithm*** for any final token issuance. 
+
+At the time of final settlement of the market, either due to an ***Airdrop Event*** or a "null" settlement, this VWAP will be divided amongst the total issued points at time of settlement (note that this can include points which were not eligible for the interim airdrop) and added to the value determined by the ***Valuation Algorithm***. In the case of a "null" settlement, this interim valuation will be the market's only value.
+
+
+
 ### Valuation Algorithm
 
 Once an airdrop event has been declared, it is necessary to calculate a value per point in order to settle the market. In some cases this may be possible immediately, and in others more information may be required even once the Airdrop Event has been triggered.
