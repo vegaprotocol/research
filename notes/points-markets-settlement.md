@@ -98,6 +98,15 @@ In the event that the data required by the ***Valuation Algorithm*** are availab
 Note that due to the specifics of oracle protocols, etc. there may be a delay between the conditions for triggering an ***Imminent Airdrop Event*** and the data reaching a market on-chain and the cessation of trading.
 
 
+### Interim Airdrop Event
+
+An ***Interim Airdrop Event*** is deemed to have occurred when some asset with tradable value is issued to at least `Interim Inclusivity Threshold` (%) of all issued *points* (including points issued after the ***Interim Airdrop Event*** snapshot) without *conversion* of the points, i.e. accounts are still deemed to have a certain balance of points assigned to them which could receive further rewards in future.
+
+Once an ***Interim Airdrop Event*** has occurred and all input to the ***Valuation Algorithm*** is available, the *total issued market value* can be calculated. This should be calculated identically to the VWAP in the ***Valuation Algorithm*** for any final token issuance, but in a window starting from the issuance of the ***Interim Airdrop***. Once this value is confirmed, the interim calculation value should be added to the market oracle for use at market settlement.
+
+Note that the stored value should be the *total issued market value* and not the value per point. At settlement this value should be divided by the total number of points issued to determine a final value per point. At the time of final settlement of the market, either due to an ***Airdrop Event*** or a "null" settlement, this VWAP will be divided amongst the total issued points at time of settlement (note that this can include points which were not eligible for the interim airdrop) and added to the value determined by the ***Valuation Algorithm***. In the case of a "null" settlement, this interim valuation will be the market's only value.
+
+
 ### Valuation Algorithm
 
 Once an airdrop event has been declared, it is necessary to calculate a value per point in order to settle the market. In some cases this may be possible immediately, and in others more information may be required even once the Airdrop Event has been triggered.
@@ -133,3 +142,10 @@ The README file in that repository contains more details on its technical use an
 5. Upload the text somewhere immutable like IPFS.
 
 6. Deploy the contract and create the Vega market, referencing both the contract address (and chain) and the IPFS link to the text in the Vega market specification. Note that the text can be changed by governance on Vega by voting through a new IPFS link as a change to the market specification.
+
+## Appendix II: Recording the Valuation of Interim Airdrops
+
+Once this interim airdrop price is determined, it can be recorded in a number of ways for future use when a final settlement event occurs:
+
+ - Optimally, an "iterative" UMA Oracle could be used, allowing for proposals of multiple values for a given contract, with each value having an additional `is_final` (or similar naming) flag. This would represent whether the current token valuation was an interim airdrop or the final settlement of points values. As part of the voting process, UMA verifiers would decide whether this value was correct. If set to `false`, when verified the contract would add the proposed value to a list of stored values, representing the interim payments based on points values. Once a proposal set to `true` is passed, the contract would resolve as settled and return a value that is the sum of the latest value and all previous ones proposed with `is_final = false`. This would allow for full control of the settlement process for the market through UMA without any updates of the Vega Protocol market post-creation.
+ - For the case where the above configuration does not work, or when the contract has not yet been designed to enable such a workflow the settlement specification document defined for settlement through UMA could be updated to include a hardcoded value for this VWAP outcome. This would go through Vega Protocol governance to update the market for settlement, but would not go through UMA. The final settlement calculation presented to UMA verifiers would then consist of adding this specified number to the outcome of the final valuation algorithm for the main token.
